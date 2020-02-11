@@ -8,7 +8,7 @@ tic = time()
 
 DATETIME_KEYS = ['startDate', 'endDate']
 NUMERIC_KEYS = ['value']
-OTHER_KEYS = ['type', 'sourceName', 'unit', 'device']
+OTHER_KEYS = ['type', 'sourceName', 'unit']
 ALL_KEYS = DATETIME_KEYS + NUMERIC_KEYS + OTHER_KEYS
 
 xtree = et.parse(r'C:\Users\gamarante\Desktop\export.xml')
@@ -21,8 +21,7 @@ rename_dict = {'startDate': 'Start',
                'value': 'Value',
                'type': 'Type',
                'sourceName': 'Source',
-               'unit': 'Unit',
-               'device': 'Device'}
+               'unit': 'Unit'}
 df = df.rename(rename_dict, axis=1)
 
 # Clean the "Value" Column
@@ -58,9 +57,13 @@ type_dict = {'HKQuantityTypeIdentifierHeight': 'Height',
              'HKCategoryTypeIdentifierSleepAnalysis': 'Sleep Analysis',
              'HKCategoryTypeIdentifierAppleStandHour': 'Stand Hour',
              'HKCategoryTypeIdentifierMindfulSession': 'Mindfull Session',
-             'HKQuantityTypeIdentifierHeartRateVariabilitySDNN': 'Heart Rate Variability'}
+             'HKQuantityTypeIdentifierHeartRateVariabilitySDNN': 'Heart Rate Variability',
+             'HKQuantityTypeIdentifierBodyMassIndex': 'BMI'}
 df['Type'] = df['Type'].replace(type_dict)
 
+# Clean dates columns
+df['Start'] = pd.to_datetime(df['Start']).dt.tz_localize(None)
+df['End'] = pd.to_datetime(df['End']).dt.tz_localize(None)
 
 toc = time()
 
