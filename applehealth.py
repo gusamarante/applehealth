@@ -2,27 +2,69 @@ import pandas as pd
 import xml.etree.cElementTree as et
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+from time import time
+
+tic = time()
 
 DATETIME_KEYS = ['startDate', 'endDate']
 NUMERIC_KEYS = ['value']
 OTHER_KEYS = ['type', 'sourceName', 'unit', 'device']
+ALL_KEYS = DATETIME_KEYS + NUMERIC_KEYS + OTHER_KEYS
 
 xtree = et.parse(r'C:\Users\gamarante\Desktop\export.xml')
 xroot = xtree.getroot()
 
-df = pd.DataFrame(columns=['Type', 'Source', 'Unit', 'Start', 'End', 'Value'])
+df = pd.DataFrame([{key: r.get(key) for key in ALL_KEYS} for r in xroot if r.tag == 'Record'])
 
-for node in tqdm(xroot, 'Processing'):
-    if node.tag == 'Record':
-        type = node.attrib['type']
-        sourceName = node.attrib['sourceName']
-        unit = node.attrib['unit']
-        startDate = node.attrib['startDate']
-        endDate = node.attrib['endDate']
-        value = node.attrib['value']
+rename_dict = {'startDate': 'Start',
+               'endDate': 'End',
+               'value': 'Value',
+               'type': 'Type',
+               'sourceName': 'Source',
+               'unit': 'Unit',
+               'device': 'Device'}
+df = df.rename(rename_dict, axis=1)
 
-        df = df.append({'Type': type, 'Source': sourceName, 'Unit': unit, 'Start': startDate, 'End': endDate, 'Value': value}, ignore_index=True)
+# Clean the "Value" Column
+stood_dict = {'HKCategoryValueAppleStandHourStood': 1,
+              'HKCategoryValueAppleStandHourIdle': 0,
+              'HKCategoryValueSleepAnalysisAsleep': 1,
+              'HKCategoryValueSleepAnalysisInBed': 0}
 
+
+df['Value'] = df['Value'].replace(stood_dict)
+df['Value'] = pd.to_numeric(df['Value'])
+
+# Clean "Type" column
+type_dict = {'HKQuantityTypeIdentifierHeight': 'Height',
+             'HKQuantityTypeIdentifierBodyMass': 'Body Mass',
+             'HKQuantityTypeIdentifierHeartRate': 'Heart Rate',
+             'HKQuantityTypeIdentifierBloodPressureSystolic': 'Systolic',
+             'HKQuantityTypeIdentifierBloodPressureDiastolic': 'Diastolic',
+             'HKQuantityTypeIdentifierBodyFatPercentage': 'Body Fat Percentage',
+             'HKQuantityTypeIdentifierStepCount': 'Step',
+             'HKQuantityTypeIdentifierDistanceWalkingRunning': 'Distance Walk+Run',
+             'HKQuantityTypeIdentifierBasalEnergyBurned': 'Basal Energy Burned',
+             'HKQuantityTypeIdentifierActiveEnergyBurned': 'Active Energy Burned',
+             'HKQuantityTypeIdentifierFlightsClimbed': 'Flights Climbed',
+             'HKQuantityTypeIdentifierAppleExerciseTime': 'Exercise Time',
+             'HKQuantityTypeIdentifierDistanceCycling': 'Distance Cycling',
+             'HKQuantityTypeIdentifierRestingHeartRate': 'Resting Heart Rate',
+             'HKQuantityTypeIdentifierVO2Max': 'VO2 Max',
+             'HKQuantityTypeIdentifierWalkingHeartRateAverage': 'Walking Heart Rate Average',
+             'HKQuantityTypeIdentifierEnvironmentalAudioExposure': 'Environment Audio Exposure',
+             'HKQuantityTypeIdentifierHeadphoneAudioExposure': 'Headphone Audio Exposure',
+             'HKQuantityTypeIdentifierAppleStandTime': 'Stand Time',
+             'HKCategoryTypeIdentifierSleepAnalysis': 'Sleep Analysis',
+             'HKCategoryTypeIdentifierAppleStandHour': 'Stand Hour',
+             'HKCategoryTypeIdentifierMindfulSession': 'Mindfull Session',
+             'HKQuantityTypeIdentifierHeartRateVariabilitySDNN': 'Heart Rate Variability'}
+df['Type'] = df['Type'].replace(type_dict)
+
+
+toc = time()
+
+print(toc-tic, 'seconds')
 
 writer = pd.ExcelWriter(r'C:\Users\gamarante\Desktop\HealtData.xlsx')
 df.to_excel(writer)
