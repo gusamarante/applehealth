@@ -30,7 +30,6 @@ stood_dict = {'HKCategoryValueAppleStandHourStood': 1,
               'HKCategoryValueSleepAnalysisAsleep': 1,
               'HKCategoryValueSleepAnalysisInBed': 0}
 
-
 df['Value'] = df['Value'].replace(stood_dict)
 df['Value'] = pd.to_numeric(df['Value'])
 
@@ -59,6 +58,8 @@ type_dict = {'HKQuantityTypeIdentifierHeight': 'Height',
              'HKCategoryTypeIdentifierMindfulSession': 'Mindfull Session',
              'HKQuantityTypeIdentifierHeartRateVariabilitySDNN': 'Heart Rate Variability',
              'HKQuantityTypeIdentifierBodyMassIndex': 'BMI'}
+
+df = df[df['Type'].isin(type_dict.keys())]
 df['Type'] = df['Type'].replace(type_dict)
 
 # Clean dates columns
@@ -69,6 +70,79 @@ toc = time()
 
 print(toc-tic, 'seconds')
 
-writer = pd.ExcelWriter(r'C:\Users\gamarante\Desktop\HealtData.xlsx')
-df.to_excel(writer)
-writer.save()
+# Systolic and Diastolic
+df_aux = df[(df['Type'] == 'Systolic') | (df['Type'] == 'Diastolic')]
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('D').mean().fillna(method='ffill')
+df_aux.plot(grid=True)
+plt.show()
+
+# Weight
+df_aux = df[df['Type'] == 'Body Mass']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux['MA 30d'] = df_aux['Body Mass'].rolling('30d').mean()
+df_aux.plot(grid=True)
+plt.show()
+
+# Body Fat Percentage
+df_aux = df[df['Type'] == 'Body Fat Percentage']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux['MA 30d'] = df_aux['Body Fat Percentage'].rolling('30d').mean()
+df_aux.plot(grid=True)
+plt.show()
+
+# Step
+df_aux = df[df['Type'] == 'Step']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('M').sum()
+df_aux.plot(grid=True, kind='bar')
+plt.show()
+
+# Distance Walk+Run
+df_aux = df[df['Type'] == 'Distance Walk+Run']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('D').sum().resample('M').mean()
+df_aux.plot(grid=True, kind='bar')
+plt.show()
+
+# Distance Cycling
+df_aux = df[df['Type'] == 'Distance Cycling']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('D').sum().resample('M').mean()
+df_aux.plot(grid=True, kind='bar')
+plt.show()
+
+# Stand Time
+df_aux = df[df['Type'] == 'Stand Time']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('H').sum()
+df_aux['Hour'] = df_aux.index.hour
+df_aux = df_aux.groupby('Hour').mean()
+df_aux.plot(grid=True, kind='bar')
+plt.show()
+
+# Mindfull Session
+df_aux = df[df['Type'] == 'Mindfull Session']
+df_aux['Minutes'] = (df['End'] - df['Start']).dt.total_seconds() / 60
+df_aux = pd.pivot_table(df_aux, 'Minutes', 'End')
+df_aux = df_aux.resample('D').sum().resample('W').mean()
+df_aux.plot(grid=True, kind='bar')
+plt.show()
+
+# BMI
+# Heart Rate
+# Basal Energy Burned
+# Active Energy Burned
+# Flights Climbed
+# Exercise Time
+# Resting Heart Rate
+# VO2 Max
+# Walking Heart Rate Average
+# Environment Audio Exposure
+# Headphone Audio Exposure
+# Sleep Analysis
+# Heart Rate Variability
+
+# writer = pd.ExcelWriter(r'C:\Users\gamarante\Desktop\HealtData.xlsx')
+# df.to_excel(writer)
+# writer.save()
