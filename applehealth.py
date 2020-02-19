@@ -129,18 +129,84 @@ df_aux = df_aux.resample('D').sum().resample('W').mean()
 df_aux.plot(grid=True, kind='bar')
 plt.show()
 
-# BMI
 # Heart Rate
+df_aux = df[df['Type'] == 'Heart Rate']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('H').mean()
+df_aux.plot(grid=True)
+plt.show()
+
+df_aux = df[df['Type'] == 'Heart Rate']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('H').mean()
+df_aux['Hour'] = df_aux.index.hour
+df_aux = df_aux.groupby('Hour').mean()
+df_aux.plot(grid=True)
+plt.show()
+
+# Exercise Time
+df_aux = df[df['Type'] == 'Exercise Time']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('D').sum().resample('W').mean()
+df_aux.plot(grid=True, kind='bar')
+plt.show()
+
+# Environment Audio Exposure
+df_aux = df[df['Type'] == 'Environment Audio Exposure']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('H').mean()
+df_aux.plot(grid=True)
+plt.show()
+
+df_aux = df[df['Type'] == 'Environment Audio Exposure']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('H').mean()
+df_aux['Hour'] = df_aux.index.hour
+df_aux = df_aux.groupby('Hour').mean()
+df_aux.plot(grid=True, kind='bar')
+plt.show()
+
+# Headphone Audio Exposure
+df_aux = df[df['Type'] == 'Headphone Audio Exposure']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('H').mean()
+df_aux.plot(grid=True)
+plt.show()
+
+df_aux = df[df['Type'] == 'Headphone Audio Exposure']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('H').mean()
+df_aux['Hour'] = df_aux.index.hour
+df_aux = df_aux.groupby('Hour').mean()
+df_aux.plot(grid=True, kind='bar')
+plt.show()
+
+# Flights Climbed
+df_aux = df[df['Type'] == 'Flights Climbed']
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('D').sum()
+df_aux.plot(grid=True)
+plt.show()
+
+# Resting Heart Rate and Walking Heart Rate Average
+df_aux = df[(df['Type'] == 'Resting Heart Rate') | (df['Type'] == 'Walking Heart Rate Average')]
+df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+df_aux = df_aux.resample('D').mean()
+df_aux.plot(grid=True)
+plt.show()
+
+# Sleep Analysis
+df_aux = df[(df['Type'] == 'Sleep Analysis') & (df['End'] >= '2020-01-01')]
+df_aux['Hours'] = ((df['End'] - df['Start']).dt.total_seconds() / (60**2)) * df['Value']
+df_aux = pd.pivot_table(df_aux, 'Hours', 'End')
+df_aux = df_aux.resample('D').sum()
+df_aux.plot(grid=True)
+plt.show()
+
+# BMI
 # Basal Energy Burned
 # Active Energy Burned
-# Flights Climbed
-# Exercise Time
-# Resting Heart Rate
 # VO2 Max
-# Walking Heart Rate Average
-# Environment Audio Exposure
-# Headphone Audio Exposure
-# Sleep Analysis
 # Heart Rate Variability
 
 # writer = pd.ExcelWriter(r'C:\Users\gamarante\Desktop\HealtData.xlsx')
