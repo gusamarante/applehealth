@@ -210,6 +210,34 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     plt.close()
 
+    # ===== Heart Rate =====
+    df_aux = df[df['Type'] == 'Heart Rate']
+    df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+    df_aux = df_aux.resample('H').mean()
+    df_aux = df_aux[df_aux.index >= '2020-01-01']
+    df_aux['Heart Rate MA'] = df_aux['Heart Rate'].fillna(method='ffill').rolling(24*7).mean()
+
+    fig, ax = plt.subplots(figsize=chart_size)
+    ax.plot(df_aux['Heart Rate'], color='red', alpha=0.5, linewidth=1)
+    ax.plot(df_aux['Heart Rate MA'], linewidth=3, color='blue')
+    ax.axvline(pd.to_datetime(quarentine_date), color='black')
+
+    ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
+
+    ax.set(title='Heart Rate',
+           xlabel=None,
+           ylabel='Beats per Minute')
+
+    fig.autofmt_xdate()
+    plt.tight_layout()
+
+    pdf.savefig(fig)
+
+    if show_charts:
+        plt.show()
+
+    plt.close()
+
 
 
 
