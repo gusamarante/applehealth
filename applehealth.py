@@ -11,7 +11,7 @@ NUMERIC_KEYS = ['value']
 OTHER_KEYS = ['type', 'sourceName', 'unit']
 ALL_KEYS = DATETIME_KEYS + NUMERIC_KEYS + OTHER_KEYS
 
-xtree = et.parse(r'C:\Users\gamarante\Desktop\export.xml')
+xtree = et.parse(r'/Users/gustavoamarante/Downloads/apple_health_export/export.xml')
 xroot = xtree.getroot()
 
 df = pd.DataFrame([{key: r.get(key) for key in ALL_KEYS} for r in xroot if r.tag == 'Record'])
@@ -203,7 +203,6 @@ df_aux = df_aux.resample('D').sum()
 df_aux.plot(grid=True)
 plt.show()
 
-# BMI
 # Basal Energy Burned
 # Active Energy Burned
 # VO2 Max
