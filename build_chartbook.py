@@ -9,6 +9,8 @@ df = pd.read_hdf('health_data.h5', 'health')
 
 quarentine_date = '2020-03-20'
 exercise_date = '2020-04-06'
+quarentine_end = '2020-06-29'
+# back2normal = ??
 
 with PdfPages('health_chartbook.pdf') as pdf:
     # ===== Weight =====
@@ -17,10 +19,12 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux = df_aux.resample('D').mean().fillna(method='ffill')
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['Body Mass 7DMA'] = df_aux['Body Mass'].rolling(7).mean()
+    df_aux['Body Mass 30DMA'] = df_aux['Body Mass'].rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
     ax.plot(df_aux['Body Mass'], linewidth=0, color='blue', alpha=0.5, marker='o', markeredgecolor='white')
     ax.plot(df_aux['Body Mass 7DMA'], linewidth=3, color='blue')
+    ax.plot(df_aux['Body Mass 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
@@ -45,10 +49,12 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux = df_aux.resample('D').mean().fillna(method='ffill')
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['BMI 7DMA'] = df_aux['BMI'].rolling(7).mean()
+    df_aux['BMI 30DMA'] = df_aux['BMI'].rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
     ax.plot(df_aux['BMI'], linewidth=0, color='blue', alpha=0.5, marker='o', markeredgecolor='white')
     ax.plot(df_aux['BMI 7DMA'], linewidth=3, color='blue')
+    ax.plot(df_aux['BMI 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
@@ -73,10 +79,12 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux = df_aux.resample('D').mean().fillna(method='ffill')
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['Body Fat Percentage 7DMA'] = df_aux['Body Fat Percentage'].rolling(7).mean()
+    df_aux['Body Fat Percentage 30DMA'] = df_aux['Body Fat Percentage'].rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
     ax.plot(100*df_aux['Body Fat Percentage'], linewidth=0, color='blue', alpha=0.5, marker='o', markeredgecolor='white')
     ax.plot(100*df_aux['Body Fat Percentage 7DMA'], linewidth=3, color='blue')
+    ax.plot(100 * df_aux['Body Fat Percentage 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
@@ -132,10 +140,12 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux = df_aux.resample('D').sum().fillna(method='ffill')
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['Step 7DMA'] = df_aux['Step'].rolling(7).mean()
+    df_aux['Step 30DMA'] = df_aux['Step'].rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
     ax.bar(df_aux['Step'].index, df_aux['Step'].values, color='blue', alpha=0.5)
     ax.plot(df_aux['Step 7DMA'], linewidth=3, color='blue')
+    ax.plot(df_aux['Step 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
@@ -160,10 +170,12 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux = df_aux.resample('D').sum()
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['Distance Walk+Run 7DMA'] = df_aux['Distance Walk+Run'].rolling(7).mean()
+    df_aux['Distance Walk+Run 30DMA'] = df_aux['Distance Walk+Run'].rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
     ax.bar(df_aux['Distance Walk+Run'].index, df_aux['Distance Walk+Run'].values, color='blue', alpha=0.5)
     ax.plot(df_aux['Distance Walk+Run 7DMA'], linewidth=3, color='blue')
+    ax.plot(df_aux['Distance Walk+Run 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
@@ -185,13 +197,15 @@ with PdfPages('health_chartbook.pdf') as pdf:
     # ===== Distance Cycling =====
     df_aux = df[df['Type'] == 'Distance Cycling']
     df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
-    df_aux = df_aux.resample('D').sum()
+    df_aux = df_aux.resample('D').sum().fillna(0)
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['Distance Cycling 7DMA'] = df_aux['Distance Cycling'].rolling(7).mean()
+    df_aux['Distance Cycling 30DMA'] = df_aux['Distance Cycling'].rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
     ax.bar(df_aux['Distance Cycling'].index, df_aux['Distance Cycling'].values, color='blue', alpha=0.5)
     ax.plot(df_aux['Distance Cycling 7DMA'], linewidth=3, color='blue')
+    ax.plot(df_aux['Distance Cycling 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
@@ -237,8 +251,3 @@ with PdfPages('health_chartbook.pdf') as pdf:
         plt.show()
 
     plt.close()
-
-
-
-
-
