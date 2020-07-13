@@ -9,7 +9,7 @@ df = pd.read_hdf('health_data.h5', 'health')
 
 quarentine_date = '2020-03-20'
 exercise_date = '2020-04-06'
-quarentine_end = '2020-06-29'
+quarentine_end = '2020-07-13'
 # back2normal = ??
 
 with PdfPages('health_chartbook.pdf') as pdf:
@@ -26,6 +26,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Body Mass 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['Body Mass 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
+    ax.axvline(pd.to_datetime(quarentine_end), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -56,6 +57,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['BMI 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['BMI 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
+    ax.axvline(pd.to_datetime(quarentine_end), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -86,6 +88,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(100*df_aux['Body Fat Percentage 7DMA'], linewidth=3, color='blue')
     ax.plot(100 * df_aux['Body Fat Percentage 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
+    ax.axvline(pd.to_datetime(quarentine_end), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -117,6 +120,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Diastolic'], linewidth=0, color='red', alpha=0.5, marker='o', markeredgecolor='white')
     ax.plot(df_aux['Diastolic 7DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
+    ax.axvline(pd.to_datetime(quarentine_end), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -147,6 +151,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Step 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['Step 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
+    ax.axvline(pd.to_datetime(quarentine_end), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -177,6 +182,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Distance Walk+Run 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['Distance Walk+Run 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
+    ax.axvline(pd.to_datetime(quarentine_end), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -207,6 +213,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Distance Cycling 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['Distance Cycling 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
+    ax.axvline(pd.to_datetime(quarentine_end), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -235,6 +242,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Heart Rate'], color='red', alpha=0.5, linewidth=1)
     ax.plot(df_aux['Heart Rate MA'], linewidth=3, color='blue')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
+    ax.axvline(pd.to_datetime(quarentine_end), color='black')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
