@@ -17,6 +17,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux = df[df['Type'] == 'Body Mass']
     df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
     df_aux = df_aux.resample('D').mean().fillna(method='ffill')
+    df_weight = df_aux.copy()
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['Body Mass 7DMA'] = df_aux['Body Mass'].rolling(7).mean()
     df_aux['Body Mass 30DMA'] = df_aux['Body Mass'].rolling(30).mean()
@@ -79,6 +80,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux = df[df['Type'] == 'Body Fat Percentage']
     df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
     df_aux = df_aux.resample('D').mean().fillna(method='ffill')
+    df_bfp = df_aux.copy()
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['Body Fat Percentage 7DMA'] = df_aux['Body Fat Percentage'].rolling(7).mean()
     df_aux['Body Fat Percentage 30DMA'] = df_aux['Body Fat Percentage'].rolling(30).mean()
@@ -95,6 +97,34 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.set(title='Body Fat Percentage',
            xlabel=None,
            ylabel=r'%')
+
+    fig.autofmt_xdate()
+    plt.tight_layout()
+
+    pdf.savefig(fig)
+
+    if show_charts:
+        plt.show()
+
+    plt.close()
+
+    # ===== Body Fat Percentage =====
+    df_aux = (df_bfp['Body Fat Percentage'] * df_weight['Body Mass']/100).to_frame('Kg of Fat')
+    df_aux['Kg of Fat 7DMA'] = df_aux['Kg of Fat'].rolling(7).mean()
+    df_aux['Kg of Fat 30DMA'] = df_aux['Kg of Fat'].rolling(30).mean()
+
+    fig, ax = plt.subplots(figsize=chart_size)
+    ax.plot(100 * df_aux['Kg of Fat'], linewidth=0, color='blue', alpha=0.5, marker='o', markeredgecolor='white')
+    ax.plot(100 * df_aux['Kg of Fat 7DMA'], linewidth=3, color='blue')
+    ax.plot(100 * df_aux['Kg of Fat 30DMA'], linewidth=3, color='red')
+    ax.axvline(pd.to_datetime(quarentine_date), color='black')
+    ax.axvline(pd.to_datetime(quarentine_end), color='black')
+
+    ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
+
+    ax.set(title='Kg of Fat',
+           xlabel=None,
+           ylabel=r'Kg')
 
     fig.autofmt_xdate()
     plt.tight_layout()
