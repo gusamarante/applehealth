@@ -108,7 +108,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     plt.close()
 
-    # ===== Body Fat Percentage =====
+    # ===== Kg of Fat =====
     df_aux = (df_bfp['Body Fat Percentage'] * df_weight['Body Mass']/100).to_frame('Kg of Fat')
     df_aux['Kg of Fat 7DMA'] = df_aux['Kg of Fat'].rolling(7).mean()
     df_aux['Kg of Fat 30DMA'] = df_aux['Kg of Fat'].rolling(30).mean()
