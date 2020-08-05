@@ -10,6 +10,7 @@ df = pd.read_hdf('health_data.h5', 'health')
 quarentine_date = '2020-03-20'
 exercise_date = '2020-04-06'
 quarentine_end = '2020-07-13'
+ozempic_date = '2020-08-04'
 # back2normal = ??
 
 with PdfPages('health_chartbook.pdf') as pdf:
@@ -28,6 +29,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Body Mass 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
+    ax.axvline(pd.to_datetime(ozempic_date), color='blue')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -59,6 +61,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['BMI 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
+    ax.axvline(pd.to_datetime(ozempic_date), color='blue')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -91,6 +94,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(100 * df_aux['Body Fat Percentage 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
+    ax.axvline(pd.to_datetime(ozempic_date), color='blue')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -108,7 +112,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     plt.close()
 
-    # ===== Body Fat Percentage =====
+    # ===== Kg of Fat =====
     df_aux = (df_bfp['Body Fat Percentage'] * df_weight['Body Mass']/100).to_frame('Kg of Fat')
     df_aux['Kg of Fat 7DMA'] = df_aux['Kg of Fat'].rolling(7).mean()
     df_aux['Kg of Fat 30DMA'] = df_aux['Kg of Fat'].rolling(30).mean()
@@ -119,6 +123,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(100 * df_aux['Kg of Fat 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
+    ax.axvline(pd.to_datetime(ozempic_date), color='blue')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -151,6 +156,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Diastolic 7DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
+    ax.axvline(pd.to_datetime(ozempic_date), color='blue')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -182,6 +188,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Step 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
+    ax.axvline(pd.to_datetime(ozempic_date), color='blue')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -213,6 +220,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Distance Walk+Run 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
+    ax.axvline(pd.to_datetime(ozempic_date), color='blue')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -244,6 +252,8 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Distance Cycling 30DMA'], linewidth=3, color='red')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
+    ax.axvline(pd.to_datetime(ozempic_date), color='blue')
+
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -273,6 +283,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Heart Rate MA'], linewidth=3, color='blue')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
+    ax.axvline(pd.to_datetime(ozempic_date), color='blue')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
