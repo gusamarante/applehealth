@@ -11,7 +11,6 @@ quarentine_date = '2020-03-20'
 exercise_date = '2020-04-06'
 quarentine_end = '2020-07-13'
 ozempic_date = '2020-08-04'
-# back2normal = ??
 
 with PdfPages('health_chartbook.pdf') as pdf:
     # ===== Weight =====
@@ -224,7 +223,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
-    ax.set(title='Wlaking + Running Distance',
+    ax.set(title='Walking + Running Distance',
            xlabel=None,
            ylabel='Kilometers')
 
