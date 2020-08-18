@@ -16,7 +16,9 @@ with PdfPages('health_chartbook.pdf') as pdf:
     # ===== Weight =====
     df_aux = df[df['Type'] == 'Body Mass']
     df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
-    df_aux = df_aux.resample('D').mean().fillna(method='ffill')
+    df_aux = df_aux.resample('D').mean()
+    df_aux = df_aux.interpolate()
+    df_aux = df_aux.fillna(method='ffill')
     df_weight = df_aux.copy()
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['Body Mass 7DMA'] = df_aux['Body Mass'].rolling(7).mean()
