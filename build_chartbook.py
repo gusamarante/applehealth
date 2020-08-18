@@ -51,7 +51,9 @@ with PdfPages('health_chartbook.pdf') as pdf:
     # ===== Body Mass Index =====
     df_aux = df[df['Type'] == 'BMI']
     df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
-    df_aux = df_aux.resample('D').mean().fillna(method='ffill')
+    df_aux = df_aux.resample('D').mean()
+    df_aux = df_aux.interpolate()
+    df_aux = df_aux.fillna(method='ffill')
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['BMI 7DMA'] = df_aux['BMI'].rolling(7).mean()
     df_aux['BMI 30DMA'] = df_aux['BMI'].rolling(30).mean()
@@ -83,7 +85,9 @@ with PdfPages('health_chartbook.pdf') as pdf:
     # ===== Body Fat Percentage =====
     df_aux = df[df['Type'] == 'Body Fat Percentage']
     df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
-    df_aux = df_aux.resample('D').mean().fillna(method='ffill')
+    df_aux = df_aux.resample('D').mean()
+    df_aux = df_aux.interpolate()
+    df_aux = df_aux.fillna(method='ffill')
     df_bfp = df_aux.copy()
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['Body Fat Percentage 7DMA'] = df_aux['Body Fat Percentage'].rolling(7).mean()
@@ -145,7 +149,9 @@ with PdfPages('health_chartbook.pdf') as pdf:
     # ===== Blood Preassure =====
     df_aux = df[(df['Type'] == 'Systolic') | (df['Type'] == 'Diastolic')]
     df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
-    df_aux = df_aux.resample('D').mean().fillna(method='ffill')
+    df_aux = df_aux.resample('D').mean()
+    df_aux = df_aux.interpolate()
+    df_aux = df_aux.fillna(method='ffill')
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['Systolic 7DMA'] = df_aux['Systolic'].rolling(7).mean()
     df_aux['Diastolic 7DMA'] = df_aux['Diastolic'].rolling(7).mean()
