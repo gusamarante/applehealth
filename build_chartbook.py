@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
+from pandas.plotting import register_matplotlib_converters
+register_matplotlib_converters()
 
 chart_size = (12, 8)
 show_charts = False
