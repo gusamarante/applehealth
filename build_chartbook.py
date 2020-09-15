@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
+from matplotlib.ticker import MultipleLocator
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
@@ -39,6 +40,9 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.set(title='Weight',
            xlabel=None,
            ylabel='Kilograms')
+
+    loc = MultipleLocator(base=1.0)  # this locator puts ticks at regular intervals
+    ax.yaxis.set_major_locator(loc)
 
     fig.autofmt_xdate()
     plt.tight_layout()
