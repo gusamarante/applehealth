@@ -160,13 +160,17 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux = df_aux.fillna(method='ffill')
     df_aux = df_aux[df_aux.index >= '2020-01-01']
     df_aux['Systolic 7DMA'] = df_aux['Systolic'].rolling(7).mean()
+    df_aux['Systolic 30DMA'] = df_aux['Systolic'].rolling(30).mean()
     df_aux['Diastolic 7DMA'] = df_aux['Diastolic'].rolling(7).mean()
+    df_aux['Diastolic 30DMA'] = df_aux['Diastolic'].rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
     ax.plot(df_aux['Systolic'], linewidth=0, color='blue', alpha=0.5, marker='o', markeredgecolor='white')
     ax.plot(df_aux['Systolic 7DMA'], linewidth=3, color='blue')
+    ax.plot(df_aux['Systolic 30DMA'], linewidth=3, color='navy')
     ax.plot(df_aux['Diastolic'], linewidth=0, color='red', alpha=0.5, marker='o', markeredgecolor='white')
     ax.plot(df_aux['Diastolic 7DMA'], linewidth=3, color='red')
+    ax.plot(df_aux['Diastolic 30DMA'], linewidth=3, color='darkred')
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
     ax.axvline(pd.to_datetime(ozempic_date), color='blue')
