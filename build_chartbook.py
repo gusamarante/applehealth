@@ -14,6 +14,7 @@ quarentine_date = '2020-03-20'
 exercise_date = '2020-04-06'
 quarentine_end = '2020-07-13'
 ozempic_date = '2020-08-04'
+sett_date = '2020-10-23'
 
 with PdfPages('health_chartbook.pdf') as pdf:
     # ===== Weight =====
@@ -34,6 +35,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
     ax.axvline(pd.to_datetime(ozempic_date), color='blue')
+    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -71,6 +73,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
     ax.axvline(pd.to_datetime(ozempic_date), color='blue')
+    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -106,6 +109,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
     ax.axvline(pd.to_datetime(ozempic_date), color='blue')
+    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -135,6 +139,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
     ax.axvline(pd.to_datetime(ozempic_date), color='blue')
+    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -174,6 +179,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
     ax.axvline(pd.to_datetime(ozempic_date), color='blue')
+    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -206,6 +212,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
     ax.axvline(pd.to_datetime(ozempic_date), color='blue')
+    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -238,6 +245,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
     ax.axvline(pd.to_datetime(ozempic_date), color='blue')
+    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -270,7 +278,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
     ax.axvline(pd.to_datetime(ozempic_date), color='blue')
-
+    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -301,6 +309,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.axvline(pd.to_datetime(quarentine_date), color='black')
     ax.axvline(pd.to_datetime(quarentine_end), color='black')
     ax.axvline(pd.to_datetime(ozempic_date), color='blue')
+    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
