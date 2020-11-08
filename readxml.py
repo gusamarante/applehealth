@@ -53,7 +53,7 @@ type_dict = {'HKQuantityTypeIdentifierHeight': 'Height',
              'HKQuantityTypeIdentifierWalkingHeartRateAverage': 'Walking Heart Rate Average',
              'HKQuantityTypeIdentifierEnvironmentalAudioExposure': 'Environment Audio Exposure',
              'HKQuantityTypeIdentifierHeadphoneAudioExposure': 'Headphone Audio Exposure',
-             'HKQuantityTypeIdentifierAppleStandTime': 'Stand Time',
+             'HKQuantityTypeIdentifierAppleStandTime': 'Stand Time',  # TODO add
              'HKCategoryTypeIdentifierSleepAnalysis': 'Sleep Analysis',
              'HKCategoryTypeIdentifierAppleStandHour': 'Stand Hour',
              'HKCategoryTypeIdentifierMindfulSession': 'Mindfull Session',
