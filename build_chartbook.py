@@ -14,7 +14,11 @@ quarentine_date = '2020-03-20'
 exercise_date = '2020-04-06'
 quarentine_end = '2020-07-13'
 ozempic_date = '2020-08-04'
+# TODO Add Ozempic end
+# TODO Add MG
 sett_date = '2020-10-23'
+CE_start = '2020-12-13'
+CE_end = '2020-12-20'
 
 with PdfPages('health_chartbook.pdf') as pdf:
     # ===== Weight =====
@@ -49,6 +53,11 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 0.2),
                 ha='left', va='top', color='darkorange')
 
+    # Férias Ceará
+    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
+                     edgecolor=None)
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
     ax.set(title='Weight',
@@ -59,7 +68,9 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.yaxis.set_major_locator(loc)
 
     fig.autofmt_xdate()
+
     plt.tight_layout()
+    plt.ylim((y1, y2))
 
     pdf.savefig(fig)
 
@@ -99,6 +110,11 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 0.05),
                 ha='left', va='top', color='darkorange')
 
+    # Férias Ceará
+    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
+                     edgecolor=None)
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
     ax.set(title='Body Mass Index',
@@ -107,6 +123,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     fig.autofmt_xdate()
     plt.tight_layout()
+    plt.ylim((y1, y2))
 
     pdf.savefig(fig)
 
@@ -147,6 +164,11 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 0.15),
                 ha='left', va='top', color='darkorange')
 
+    # Férias Ceará
+    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
+                     edgecolor=None)
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
     loc = MultipleLocator(base=1.0)  # this locator puts ticks at regular intervals
@@ -158,6 +180,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     fig.autofmt_xdate()
     plt.tight_layout()
+    plt.ylim((y1, y2))
 
     pdf.savefig(fig)
 
@@ -192,6 +215,11 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 0.15),
                 ha='left', va='top', color='darkorange')
 
+    # Férias Ceará
+    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
+                     edgecolor=None)
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
     loc = MultipleLocator(base=1.0)  # this locator puts ticks at regular intervals
@@ -203,6 +231,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     fig.autofmt_xdate()
     plt.tight_layout()
+    plt.ylim((y1, y2))
 
     pdf.savefig(fig)
 
@@ -247,6 +276,11 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 1),
                 ha='left', va='top', color='darkorange')
 
+    # Férias Ceará
+    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
+                     edgecolor=None)
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
     ax.set(title='Blood Preassure',
@@ -255,6 +289,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     fig.autofmt_xdate()
     plt.tight_layout()
+    plt.ylim((y1, y2))
 
     pdf.savefig(fig)
 
@@ -292,6 +327,11 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 200),
                 ha='left', va='top', color='darkorange')
 
+    # Férias Ceará
+    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
+                     edgecolor=None)
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
     ax.set(title='Step Count',
@@ -300,6 +340,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     fig.autofmt_xdate()
     plt.tight_layout()
+    plt.ylim((y1, y2))
 
     pdf.savefig(fig)
 
@@ -337,6 +378,11 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 0.2),
                 ha='left', va='top', color='darkorange')
 
+    # Férias Ceará
+    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
+                     edgecolor=None)
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
     loc = MultipleLocator(base=1.0)  # this locator puts ticks at regular intervals
@@ -348,6 +394,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     fig.autofmt_xdate()
     plt.tight_layout()
+    plt.ylim((y1, y2))
 
     pdf.savefig(fig)
 
@@ -385,6 +432,11 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 0.2),
                 ha='left', va='top', color='darkorange')
 
+    # Férias Ceará
+    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
+                     edgecolor=None)
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
     loc = MultipleLocator(base=1.0)  # this locator puts ticks at regular intervals
@@ -396,6 +448,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     fig.autofmt_xdate()
     plt.tight_layout()
+    plt.ylim((y1, y2))
 
     pdf.savefig(fig)
 
@@ -433,6 +486,11 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 1),
                 ha='left', va='top', color='darkorange')
 
+    # Férias Ceará
+    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
+                     edgecolor=None)
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
     ax.set(title='Exercise Time',
@@ -441,6 +499,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     fig.autofmt_xdate()
     plt.tight_layout()
+    plt.ylim((y1, y2))
 
     pdf.savefig(fig)
 
@@ -476,6 +535,11 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 2),
                 ha='left', va='top', color='darkorange')
 
+    # Férias Ceará
+    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
+                     edgecolor=None)
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
     loc = MultipleLocator(base=5.0)  # this locator puts ticks at regular intervals
@@ -487,6 +551,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     fig.autofmt_xdate()
     plt.tight_layout()
+    plt.ylim((y1, y2))
 
     pdf.savefig(fig)
 
