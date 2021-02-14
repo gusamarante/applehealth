@@ -12,7 +12,7 @@ NUMERIC_KEYS = ['value']
 OTHER_KEYS = ['type', 'sourceName', 'unit']
 ALL_KEYS = DATETIME_KEYS + NUMERIC_KEYS + OTHER_KEYS
 
-xtree = et.parse(r'/Users/gusamarante/Downloads/apple_health_export/export.xml')
+xtree = et.parse(r'/Users/gustavoamarante/Downloads/apple_health_export/export.xml')
 xroot = xtree.getroot()
 
 df = pd.DataFrame([{key: r.get(key) for key in ALL_KEYS} for r in xroot if r.tag == 'Record'])
@@ -29,7 +29,8 @@ df = df.rename(rename_dict, axis=1)
 stood_dict = {'HKCategoryValueAppleStandHourStood': 1,
               'HKCategoryValueAppleStandHourIdle': 0,
               'HKCategoryValueSleepAnalysisAsleep': 1,
-              'HKCategoryValueSleepAnalysisInBed': 0}
+              'HKCategoryValueSleepAnalysisInBed': 0,
+              'HKCategoryValueEnvironmentalAudioExposureEventMomentaryLimit': 1}
 
 df['Value'] = df['Value'].replace(stood_dict)
 df['Value'] = pd.to_numeric(df['Value'])
@@ -53,7 +54,7 @@ type_dict = {'HKQuantityTypeIdentifierHeight': 'Height',
              'HKQuantityTypeIdentifierWalkingHeartRateAverage': 'Walking Heart Rate Average',
              'HKQuantityTypeIdentifierEnvironmentalAudioExposure': 'Environment Audio Exposure',
              'HKQuantityTypeIdentifierHeadphoneAudioExposure': 'Headphone Audio Exposure',
-             'HKQuantityTypeIdentifierAppleStandTime': 'Stand Time',  # TODO add
+             'HKQuantityTypeIdentifierAppleStandTime': 'Stand Time',
              'HKCategoryTypeIdentifierSleepAnalysis': 'Sleep Analysis',
              'HKCategoryTypeIdentifierAppleStandHour': 'Stand Hour',
              'HKCategoryTypeIdentifierMindfulSession': 'Mindfull Session',

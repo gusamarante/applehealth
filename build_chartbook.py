@@ -113,7 +113,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     # Férias Ceará
     plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
                      edgecolor=None)
-    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.05), ha='left', va='top', color='lightcoral')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -511,9 +511,9 @@ with PdfPages('health_chartbook.pdf') as pdf:
     # ===== Heart Rate =====
     df_aux = df[df['Type'] == 'Heart Rate']
     df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
-    df_aux = df_aux.resample('H').mean()
+    df_aux = df_aux.resample('D').mean()
     df_aux = df_aux[df_aux.index >= '2020-01-01']
-    df_aux['Heart Rate MA'] = df_aux['Heart Rate'].fillna(method='ffill').rolling(24*30).mean()
+    df_aux['Heart Rate MA'] = df_aux['Heart Rate'].fillna(method='ffill').rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
     ax.plot(df_aux['Heart Rate'], color='red', alpha=0.5, linewidth=1)
@@ -538,7 +538,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     # Férias Ceará
     plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
                      edgecolor=None)
-    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 2), ha='left', va='top', color='lightcoral')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
