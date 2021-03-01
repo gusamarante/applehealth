@@ -330,7 +330,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     # Férias Ceará
     plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
                      edgecolor=None)
-    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
+    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 200), ha='left', va='top', color='lightcoral')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
