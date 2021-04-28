@@ -14,6 +14,7 @@ quarentine_date = '2020-03-20'
 exercise_date = '2020-04-06'
 quarentine_end = '2020-07-13'
 ozempic_date = '2020-08-04'
+ozempic_date2 = '2021-04-26'
 sett_date = '2020-10-23'
 CE_start = '2020-12-13'
 CE_end = '2020-12-20'
@@ -77,26 +78,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['BMI 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['BMI 30DMA'], linewidth=3, color='red')
 
-    ax.axvline(pd.to_datetime(quarentine_date), color='black')
-    ax.axvline(pd.to_datetime(quarentine_end), color='black')
-    ax.axvline(pd.to_datetime(ozempic_date), color='green')
-    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
-
     y1, y2 = ax.get_ylim()
-
-    ax.annotate(' Start of Isolation', xy=(pd.to_datetime(quarentine_date), y2 - 0.05),
-                ha='left', va='top', color='black')
-    ax.annotate('End of Isolation ', xy=(pd.to_datetime(quarentine_end), y2 - 0.05),
-                ha='right', va='top', color='black')
-    ax.annotate(' Diet', xy=(pd.to_datetime(ozempic_date), y2 - 0.05),
-                ha='left', va='top', color='green')
-    ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 0.05),
-                ha='left', va='top', color='darkorange')
-
-    # Férias Ceará
-    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
-                     edgecolor=None)
-    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.05), ha='left', va='top', color='lightcoral')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -131,26 +113,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(100*df_aux['Body Fat Percentage 7DMA'], linewidth=3, color='blue')
     ax.plot(100 * df_aux['Body Fat Percentage 30DMA'], linewidth=3, color='red')
 
-    ax.axvline(pd.to_datetime(quarentine_date), color='black')
-    ax.axvline(pd.to_datetime(quarentine_end), color='black')
-    ax.axvline(pd.to_datetime(ozempic_date), color='green')
-    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
-
     y1, y2 = ax.get_ylim()
-
-    ax.annotate(' Start of Isolation', xy=(pd.to_datetime(quarentine_date), y2 - 0.15),
-                ha='left', va='top', color='black')
-    ax.annotate('End of Isolation ', xy=(pd.to_datetime(quarentine_end), y2 - 0.15),
-                ha='right', va='top', color='black')
-    ax.annotate(' Diet', xy=(pd.to_datetime(ozempic_date), y2 - 0.15),
-                ha='left', va='top', color='green')
-    ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 0.15),
-                ha='left', va='top', color='darkorange')
-
-    # Férias Ceará
-    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
-                     edgecolor=None)
-    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -182,26 +145,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(100 * df_aux['Kg of Fat 7DMA'], linewidth=3, color='blue')
     ax.plot(100 * df_aux['Kg of Fat 30DMA'], linewidth=3, color='red')
 
-    ax.axvline(pd.to_datetime(quarentine_date), color='black')
-    ax.axvline(pd.to_datetime(quarentine_end), color='black')
-    ax.axvline(pd.to_datetime(ozempic_date), color='green')
-    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
-
     y1, y2 = ax.get_ylim()
-
-    ax.annotate(' Start of Isolation', xy=(pd.to_datetime(quarentine_date), y2 - 0.15),
-                ha='left', va='top', color='black')
-    ax.annotate('End of Isolation ', xy=(pd.to_datetime(quarentine_end), y2 - 0.15),
-                ha='right', va='top', color='black')
-    ax.annotate(' Diet', xy=(pd.to_datetime(ozempic_date), y2 - 0.15),
-                ha='left', va='top', color='green')
-    ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 0.15),
-                ha='left', va='top', color='darkorange')
-
-    # Férias Ceará
-    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
-                     edgecolor=None)
-    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -243,26 +187,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Diastolic 7DMA'], linewidth=3, color='red')
     ax.plot(df_aux['Diastolic 30DMA'], linewidth=3, color='darkred')
 
-    ax.axvline(pd.to_datetime(quarentine_date), color='black')
-    ax.axvline(pd.to_datetime(quarentine_end), color='black')
-    ax.axvline(pd.to_datetime(ozempic_date), color='green')
-    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
-
     y1, y2 = ax.get_ylim()
-
-    ax.annotate(' Start of Isolation', xy=(pd.to_datetime(quarentine_date), y2 - 1),
-                ha='left', va='top', color='black')
-    ax.annotate('End of Isolation ', xy=(pd.to_datetime(quarentine_end), y2 - 1),
-                ha='right', va='top', color='black')
-    ax.annotate(' Diet', xy=(pd.to_datetime(ozempic_date), y2 - 1),
-                ha='left', va='top', color='green')
-    ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 1),
-                ha='left', va='top', color='darkorange')
-
-    # Férias Ceará
-    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
-                     edgecolor=None)
-    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -294,26 +219,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Step 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['Step 30DMA'], linewidth=3, color='red')
 
-    ax.axvline(pd.to_datetime(quarentine_date), color='black')
-    ax.axvline(pd.to_datetime(quarentine_end), color='black')
-    ax.axvline(pd.to_datetime(ozempic_date), color='green')
-    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
-
     y1, y2 = ax.get_ylim()
-
-    ax.annotate(' Start of Isolation', xy=(pd.to_datetime(quarentine_date), y2 - 200),
-                ha='left', va='top', color='black')
-    ax.annotate('End of Isolation ', xy=(pd.to_datetime(quarentine_end), y2 - 200),
-                ha='right', va='top', color='black')
-    ax.annotate(' Diet', xy=(pd.to_datetime(ozempic_date), y2 - 200),
-                ha='left', va='top', color='green')
-    ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 200),
-                ha='left', va='top', color='darkorange')
-
-    # Férias Ceará
-    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
-                     edgecolor=None)
-    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 200), ha='left', va='top', color='lightcoral')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -345,26 +251,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Distance Walk+Run 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['Distance Walk+Run 30DMA'], linewidth=3, color='red')
 
-    ax.axvline(pd.to_datetime(quarentine_date), color='black')
-    ax.axvline(pd.to_datetime(quarentine_end), color='black')
-    ax.axvline(pd.to_datetime(ozempic_date), color='green')
-    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
-
     y1, y2 = ax.get_ylim()
-
-    ax.annotate(' Start of Isolation', xy=(pd.to_datetime(quarentine_date), y2 - 0.2),
-                ha='left', va='top', color='black')
-    ax.annotate('End of Isolation ', xy=(pd.to_datetime(quarentine_end), y2 - 0.2),
-                ha='right', va='top', color='black')
-    ax.annotate(' Diet', xy=(pd.to_datetime(ozempic_date), y2 - 0.2),
-                ha='left', va='top', color='green')
-    ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 0.2),
-                ha='left', va='top', color='darkorange')
-
-    # Férias Ceará
-    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
-                     edgecolor=None)
-    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -434,26 +321,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Exercise Time 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['Exercise Time 30DMA'], linewidth=3, color='red')
 
-    ax.axvline(pd.to_datetime(quarentine_date), color='black')
-    ax.axvline(pd.to_datetime(quarentine_end), color='black')
-    ax.axvline(pd.to_datetime(ozempic_date), color='green')
-    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
-
     y1, y2 = ax.get_ylim()
-
-    ax.annotate(' Start of Isolation', xy=(pd.to_datetime(quarentine_date), y2 - 1),
-                ha='left', va='top', color='black')
-    ax.annotate('End of Isolation ', xy=(pd.to_datetime(quarentine_end), y2 - 1),
-                ha='right', va='top', color='black')
-    ax.annotate(' Diet', xy=(pd.to_datetime(ozempic_date), y2 - 1),
-                ha='left', va='top', color='green')
-    ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 1),
-                ha='left', va='top', color='darkorange')
-
-    # Férias Ceará
-    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
-                     edgecolor=None)
-    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 0.2), ha='left', va='top', color='lightcoral')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -483,26 +351,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     ax.plot(df_aux['Heart Rate'], color='red', alpha=0.5, linewidth=1)
     ax.plot(df_aux['Heart Rate MA'], linewidth=3, color='blue')
 
-    ax.axvline(pd.to_datetime(quarentine_date), color='black')
-    ax.axvline(pd.to_datetime(quarentine_end), color='black')
-    ax.axvline(pd.to_datetime(ozempic_date), color='green')
-    ax.axvline(pd.to_datetime(sett_date), color='darkorange')
-
     y1, y2 = ax.get_ylim()
-
-    ax.annotate(' Start of Isolation', xy=(pd.to_datetime(quarentine_date), y2 - 2),
-                ha='left', va='top', color='black')
-    ax.annotate('End of Isolation ', xy=(pd.to_datetime(quarentine_end), y2 - 2),
-                ha='right', va='top', color='black')
-    ax.annotate(' Diet', xy=(pd.to_datetime(ozempic_date), y2 - 2),
-                ha='left', va='top', color='green')
-    ax.annotate(' Gym', xy=(pd.to_datetime(sett_date), y2 - 2),
-                ha='left', va='top', color='darkorange')
-
-    # Férias Ceará
-    plt.fill_between(pd.date_range(CE_start, CE_end, freq='D'), y1 - 10, y2 + 10, alpha=0.3, color='lightcoral',
-                     edgecolor=None)
-    ax.annotate('Ceará', xy=(pd.to_datetime(CE_start), y2 - 2), ha='left', va='top', color='lightcoral')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
