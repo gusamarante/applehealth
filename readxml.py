@@ -59,7 +59,8 @@ type_dict = {'HKQuantityTypeIdentifierHeight': 'Height',
              'HKCategoryTypeIdentifierAppleStandHour': 'Stand Hour',
              'HKCategoryTypeIdentifierMindfulSession': 'Mindfull Session',
              'HKQuantityTypeIdentifierHeartRateVariabilitySDNN': 'Heart Rate Variability',
-             'HKQuantityTypeIdentifierBodyMassIndex': 'BMI'}
+             'HKQuantityTypeIdentifierBodyMassIndex': 'BMI',
+             'HKQuantityTypeIdentifierWaistCircumference': 'Waist Circumference'}
 
 df = df[df['Type'].isin(type_dict.keys())]
 df['Type'] = df['Type'].replace(type_dict)

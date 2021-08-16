@@ -372,3 +372,40 @@ with PdfPages('health_chartbook.pdf') as pdf:
         plt.show()
 
     plt.close()
+
+    # ===== Waist Circumference =====
+    df_aux = df[df['Type'] == 'Waist Circumference']
+    df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
+    df_aux = df_aux.resample('D').mean()
+    df_aux = df_aux.interpolate()
+    df_aux = df_aux.fillna(method='ffill')
+    df_aux['Waist 7DMA'] = df_aux['Waist Circumference'].rolling(7).mean()
+    df_aux['Waist 30DMA'] = df_aux['Waist Circumference'].rolling(30).mean()
+
+    fig, ax = plt.subplots(figsize=chart_size)
+    ax.plot(df_aux['Waist Circumference'], linewidth=0, color='blue', alpha=0.5, marker='o', markeredgecolor='white')
+    ax.plot(df_aux['Waist 7DMA'], linewidth=3, color='blue')
+    ax.plot(df_aux['Waist 30DMA'], linewidth=3, color='red')
+
+    y1, y2 = ax.get_ylim()
+
+    ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
+
+    ax.set(title='Waist Circumference',
+           xlabel=None,
+           ylabel='centimeters')
+
+    loc = MultipleLocator(base=1.0)  # this locator puts ticks at regular intervals
+    ax.yaxis.set_major_locator(loc)
+
+    fig.autofmt_xdate()
+
+    plt.tight_layout()
+    plt.ylim((y1, y2))
+
+    pdf.savefig(fig)
+
+    if show_charts:
+        plt.show()
+
+    plt.close()
