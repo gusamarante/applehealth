@@ -215,7 +215,8 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux['Step 30DMA'] = df_aux['Step'].rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
-    ax.bar(df_aux['Step'].index, df_aux['Step'].values, color='blue', alpha=0.5)
+    ax.bar(df_aux['Step'].index, df_aux['Step'].values, color='blue',
+           alpha=0.5, edgecolor=None)
     ax.plot(df_aux['Step 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['Step 30DMA'], linewidth=3, color='red')
 
