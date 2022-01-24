@@ -38,10 +38,6 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     y1, y2 = ax.get_ylim()
 
-    # ax.axvline(pd.to_datetime(ozempic_date), color='green')
-    # ax.annotate(' Diet', xy=(pd.to_datetime(ozempic_date), y2 - 0.15),
-    #             ha='left', va='top', color='green')
-
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
     ax.set(title='Weight',
