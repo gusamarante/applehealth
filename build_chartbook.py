@@ -6,7 +6,7 @@ from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
 chart_size = (12, 8)
-show_charts = False
+show_charts = True
 
 df = pd.read_hdf('health_data.h5', 'health')
 
@@ -18,6 +18,7 @@ ozempic_date2 = '2021-04-26'
 sett_date = '2020-10-23'
 CE_start = '2020-12-13'
 CE_end = '2020-12-20'
+new_scale_date = '2022-01-26'
 
 with PdfPages('health_chartbook.pdf') as pdf:
     # ===== Weight =====
@@ -46,6 +47,8 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     loc = MultipleLocator(base=1.0)  # this locator puts ticks at regular intervals
     ax.yaxis.set_major_locator(loc)
+
+    ax.axvline(new_scale_date, color='black', linewidth=1)
 
     fig.autofmt_xdate()
 
@@ -77,6 +80,8 @@ with PdfPages('health_chartbook.pdf') as pdf:
     y1, y2 = ax.get_ylim()
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
+
+    ax.axvline(new_scale_date, color='black', linewidth=1)
 
     ax.set(title='Body Mass Index',
            xlabel=None,
@@ -116,6 +121,8 @@ with PdfPages('health_chartbook.pdf') as pdf:
     loc = MultipleLocator(base=1.0)  # this locator puts ticks at regular intervals
     ax.yaxis.set_major_locator(loc)
 
+    ax.axvline(new_scale_date, color='black', linewidth=1)
+
     ax.set(title='Body Fat Percentage',
            xlabel=None,
            ylabel=r'%')
@@ -147,6 +154,8 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     loc = MultipleLocator(base=1.0)  # this locator puts ticks at regular intervals
     ax.yaxis.set_major_locator(loc)
+
+    ax.axvline(new_scale_date, color='black', linewidth=1)
 
     ax.set(title='Kg of Fat',
            xlabel=None,
