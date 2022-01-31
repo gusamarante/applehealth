@@ -6,7 +6,7 @@ from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
 chart_size = (12, 8)
-show_charts = True
+show_charts = False
 
 df = pd.read_hdf('health_data.h5', 'health')
 
