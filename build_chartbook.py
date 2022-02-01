@@ -221,7 +221,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     fig, ax = plt.subplots(figsize=chart_size)
     ax.bar(df_aux['Step'].index, df_aux['Step'].values, color='blue',
-           alpha=0.5, edgecolor=None)
+           alpha=0.5, edgecolor=None, width=1)
     ax.plot(df_aux['Step 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['Step 30DMA'], linewidth=3, color='red')
 
@@ -253,7 +253,8 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux['Distance Walk+Run 30DMA'] = df_aux['Distance Walk+Run'].rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
-    ax.bar(df_aux['Distance Walk+Run'].index, df_aux['Distance Walk+Run'].values, color='blue', alpha=0.5)
+    ax.bar(df_aux['Distance Walk+Run'].index, df_aux['Distance Walk+Run'].values,
+           color='blue', alpha=0.5, width=1)
     ax.plot(df_aux['Distance Walk+Run 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['Distance Walk+Run 30DMA'], linewidth=3, color='red')
 
@@ -288,7 +289,8 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux['Distance Cycling 30DMA'] = df_aux['Distance Cycling'].rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
-    ax.bar(df_aux['Distance Cycling'].index, df_aux['Distance Cycling'].values, color='blue', alpha=0.5)
+    ax.bar(df_aux['Distance Cycling'].index, df_aux['Distance Cycling'].values,
+           color='blue', alpha=0.5, width=1)
     ax.plot(df_aux['Distance Cycling 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['Distance Cycling 30DMA'], linewidth=3, color='red')
 
@@ -323,7 +325,8 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux['Exercise Time 30DMA'] = df_aux['Exercise Time'].fillna(method='ffill').rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
-    ax.bar(df_aux['Exercise Time'].index, df_aux['Exercise Time'].values, color='blue', alpha=0.5)
+    ax.bar(df_aux['Exercise Time'].index, df_aux['Exercise Time'].values,
+           color='blue', alpha=0.5, width=1)
     ax.plot(df_aux['Exercise Time 7DMA'], linewidth=3, color='blue')
     ax.plot(df_aux['Exercise Time 30DMA'], linewidth=3, color='red')
 
