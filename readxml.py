@@ -42,6 +42,7 @@ type_dict = {'HKQuantityTypeIdentifierHeight': 'Height',
              'HKQuantityTypeIdentifierBloodPressureSystolic': 'Systolic',
              'HKQuantityTypeIdentifierBloodPressureDiastolic': 'Diastolic',
              'HKQuantityTypeIdentifierBodyFatPercentage': 'Body Fat Percentage',
+             'HKQuantityTypeIdentifierLeanBodyMass': 'Lean Body Mass',
              'HKQuantityTypeIdentifierStepCount': 'Step',
              'HKQuantityTypeIdentifierDistanceWalkingRunning': 'Distance Walk+Run',
              'HKQuantityTypeIdentifierBasalEnergyBurned': 'Basal Energy Burned',
@@ -50,8 +51,8 @@ type_dict = {'HKQuantityTypeIdentifierHeight': 'Height',
              'HKQuantityTypeIdentifierAppleExerciseTime': 'Exercise Time',
              'HKQuantityTypeIdentifierDistanceCycling': 'Distance Cycling',
              'HKQuantityTypeIdentifierRestingHeartRate': 'Resting Heart Rate',
+             'HKQuantityTypeIdentifierWalkingHeartRateAverage': 'Walking Heart Rate',
              'HKQuantityTypeIdentifierVO2Max': 'VO2 Max',
-             'HKQuantityTypeIdentifierWalkingHeartRateAverage': 'Walking Heart Rate Average',
              'HKQuantityTypeIdentifierEnvironmentalAudioExposure': 'Environment Audio Exposure',
              'HKQuantityTypeIdentifierHeadphoneAudioExposure': 'Headphone Audio Exposure',
              'HKQuantityTypeIdentifierAppleStandTime': 'Stand Time',
@@ -75,4 +76,4 @@ store['health'] = df
 store.close()
 toc = time()
 
-print(toc-tic, 'seconds')
+print(toc - tic, 'seconds')
