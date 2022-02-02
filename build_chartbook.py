@@ -5,7 +5,7 @@ from matplotlib.ticker import MultipleLocator
 from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
-chart_size = (12, 8)
+chart_size = (17, 8)
 show_charts = False
 
 df = pd.read_hdf('health_data.h5', 'health')
@@ -50,7 +50,11 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     ax.axvline(new_scale_date, color='black', linewidth=1)
 
-    fig.autofmt_xdate()
+    x_max, x_min = df_aux.dropna(how='all').index.max(), df_aux.index.dropna(how='all').min()
+    plt.xlim(x_min, x_max + pd.offsets.Day(10))
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
 
     plt.tight_layout()
     plt.ylim((y1, y2))
@@ -87,7 +91,12 @@ with PdfPages('health_chartbook.pdf') as pdf:
            xlabel=None,
            ylabel=None)
 
-    fig.autofmt_xdate()
+    x_max, x_min = df_aux.dropna(how='all').index.max(), df_aux.index.dropna(how='all').min()
+    plt.xlim(x_min, x_max + pd.offsets.Day(10))
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
+
     plt.tight_layout()
     plt.ylim((y1, y2))
 
@@ -127,7 +136,12 @@ with PdfPages('health_chartbook.pdf') as pdf:
            xlabel=None,
            ylabel=r'%')
 
-    fig.autofmt_xdate()
+    x_max, x_min = df_aux.dropna(how='all').index.max(), df_aux.index.dropna(how='all').min()
+    plt.xlim(x_min, x_max + pd.offsets.Day(10))
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
+
     plt.tight_layout()
     plt.ylim((y1, y2))
 
@@ -142,6 +156,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
     df_aux = (df_bfp['Body Fat Percentage'] * df_weight['Body Mass']/100).to_frame('Kg of Fat')
     df_aux['Kg of Fat 7DMA'] = df_aux['Kg of Fat'].rolling(7).mean()
     df_aux['Kg of Fat 30DMA'] = df_aux['Kg of Fat'].rolling(30).mean()
+    df_aux = df_aux[df_aux.index >= '2020-01-01']
 
     fig, ax = plt.subplots(figsize=chart_size)
     ax.plot(100 * df_aux['Kg of Fat'], linewidth=0, color='blue', alpha=0.5, marker='o', markeredgecolor='white')
@@ -161,7 +176,12 @@ with PdfPages('health_chartbook.pdf') as pdf:
            xlabel=None,
            ylabel=r'Kg')
 
-    fig.autofmt_xdate()
+    x_max, x_min = df_aux.dropna(how='all').index.max(), df_aux.index.dropna(how='all').min()
+    plt.xlim(x_min, x_max + pd.offsets.Day(10))
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
+
     plt.tight_layout()
     plt.ylim((y1, y2))
 
@@ -172,7 +192,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     plt.close()
 
-    # ===== Blood Preassure =====
+    # ===== Blood Pressure =====
     df_aux = df[(df['Type'] == 'Systolic') | (df['Type'] == 'Diastolic')]
     df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
     df_aux = df_aux.resample('D').mean()
@@ -196,11 +216,16 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
-    ax.set(title='Blood Preassure',
+    ax.set(title='Blood Pressure',
            xlabel=None,
            ylabel=None)
 
-    fig.autofmt_xdate()
+    x_max, x_min = df_aux.dropna(how='all').index.max(), df_aux.index.dropna(how='all').min()
+    plt.xlim(x_min, x_max + pd.offsets.Day(10))
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
+
     plt.tight_layout()
     plt.ylim((y1, y2))
 
@@ -233,7 +258,15 @@ with PdfPages('health_chartbook.pdf') as pdf:
            xlabel=None,
            ylabel=None)
 
-    fig.autofmt_xdate()
+    x_max, x_min = df_aux.dropna(how='all').index.max(), df_aux.index.dropna(how='all').min()
+    plt.xlim(x_min, x_max + pd.offsets.Day(10))
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
+
+    loc = MultipleLocator(base=5000)  # this locator puts ticks at regular intervals
+    ax.yaxis.set_major_locator(loc)
+
     plt.tight_layout()
     plt.ylim((y1, y2))
 
@@ -269,7 +302,12 @@ with PdfPages('health_chartbook.pdf') as pdf:
            xlabel=None,
            ylabel='Kilometers')
 
-    fig.autofmt_xdate()
+    x_max, x_min = df_aux.dropna(how='all').index.max(), df_aux.index.dropna(how='all').min()
+    plt.xlim(x_min, x_max + pd.offsets.Day(10))
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
+
     plt.tight_layout()
     plt.ylim((y1, y2))
 
@@ -280,7 +318,7 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
     plt.close()
 
-    # ===== Distance Cycling =====
+    # ===== Cycling Distance =====
     df_aux = df[df['Type'] == 'Distance Cycling']
     df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
     df_aux = df_aux.resample('D').sum().fillna(0)
@@ -305,9 +343,14 @@ with PdfPages('health_chartbook.pdf') as pdf:
            xlabel=None,
            ylabel='Kilometers')
 
-    fig.autofmt_xdate()
+    x_max, x_min = df_aux.dropna(how='all').index.max(), df_aux.index.dropna(how='all').min()
+    plt.xlim(x_min, x_max + pd.offsets.Day(10))
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
+
     plt.tight_layout()
-    plt.ylim((y1, y2))
+    plt.ylim((y1, 20))
 
     pdf.savefig(fig)
 
@@ -338,7 +381,15 @@ with PdfPages('health_chartbook.pdf') as pdf:
            xlabel=None,
            ylabel='Minutes')
 
-    fig.autofmt_xdate()
+    x_max, x_min = df_aux.dropna(how='all').index.max(), df_aux.index.dropna(how='all').min()
+    plt.xlim(x_min, x_max + pd.offsets.Day(10))
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
+
+    loc = MultipleLocator(base=10)  # this locator puts ticks at regular intervals
+    ax.yaxis.set_major_locator(loc)
+
     plt.tight_layout()
     plt.ylim((y1, y2))
 
@@ -350,17 +401,39 @@ with PdfPages('health_chartbook.pdf') as pdf:
     plt.close()
 
     # ===== Heart Rate =====
-    df_aux = df[df['Type'] == 'Heart Rate']
-    df_aux = pd.pivot_table(df_aux, 'Value', 'End', 'Type')
-    df_aux = df_aux.resample('D').mean()
-    df_aux = df_aux[df_aux.index >= '2020-01-01']
-    df_aux['Heart Rate MA'] = df_aux['Heart Rate'].fillna(method='ffill').rolling(30).mean()
+    df_hr = df[df['Type'] == 'Heart Rate']
+    df_hr = pd.pivot_table(df_hr, 'Value', 'End', 'Type')
+    df_hr = df_hr.resample('D').mean()
+    df_hr = df_hr[df_hr.index >= '2020-01-01']
+    df_hr['Heart Rate MA'] = df_hr['Heart Rate'].fillna(method='ffill').rolling(30).mean()
+
+    df_rhr = df[df['Type'] == 'Resting Heart Rate']
+    df_rhr = pd.pivot_table(df_rhr, 'Value', 'End', 'Type')
+    df_rhr = df_rhr.resample('D').mean()
+    df_rhr = df_rhr[df_rhr.index >= '2020-01-01']
+    df_rhr['Resting Heart Rate MA'] = df_rhr['Resting Heart Rate'].fillna(method='ffill').rolling(30).mean()
+
+    df_whr = df[df['Type'] == 'Walking Heart Rate']
+    df_whr = pd.pivot_table(df_whr, 'Value', 'End', 'Type')
+    df_whr = df_whr.resample('D').mean()
+    df_whr = df_whr[df_whr.index >= '2020-01-01']
+    df_whr['Walking Heart Rate MA'] = df_whr['Walking Heart Rate'].fillna(method='ffill').rolling(30).mean()
 
     fig, ax = plt.subplots(figsize=chart_size)
-    ax.plot(df_aux['Heart Rate'], color='red', alpha=0.5, linewidth=1)
-    ax.plot(df_aux['Heart Rate MA'], linewidth=3, color='blue')
+    ax.plot(df_hr['Heart Rate'], color='red', alpha=0.3, linewidth=1)
+    ax.plot(df_hr['Heart Rate MA'], linewidth=3, color='red', label='Average')
 
+    ax.plot(df_rhr['Resting Heart Rate'], color='blue', alpha=0.3, linewidth=1)
+    ax.plot(df_rhr['Resting Heart Rate MA'], linewidth=3, color='blue', label='Resting')
+
+    ax.plot(df_whr['Walking Heart Rate'], color='green', alpha=0.3, linewidth=1)
+    ax.plot(df_whr['Walking Heart Rate MA'], linewidth=3, color='green', label='Walking')
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
     y1, y2 = ax.get_ylim()
+
+    plt.legend(loc='upper left')
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
@@ -371,7 +444,9 @@ with PdfPages('health_chartbook.pdf') as pdf:
            xlabel=None,
            ylabel='Beats per Minute')
 
-    fig.autofmt_xdate()
+    x_max, x_min = df_hr.dropna(how='all').index.max(), df_hr.index.dropna(how='all').min()
+    plt.xlim(x_min, x_max + pd.offsets.Day(10))
+
     plt.tight_layout()
     plt.ylim((y1, y2))
 
@@ -407,7 +482,11 @@ with PdfPages('health_chartbook.pdf') as pdf:
     loc = MultipleLocator(base=1.0)  # this locator puts ticks at regular intervals
     ax.yaxis.set_major_locator(loc)
 
-    fig.autofmt_xdate()
+    x_max, x_min = df_aux.dropna(how='all').index.max(), df_aux.index.dropna(how='all').min()
+    plt.xlim(x_min, x_max + pd.offsets.Day(10))
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
 
     plt.tight_layout()
     plt.ylim((y1, y2))
