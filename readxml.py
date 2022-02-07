@@ -1,8 +1,6 @@
-import pandas as pd
 import xml.etree.cElementTree as et
-from tqdm import tqdm
-import matplotlib.pyplot as plt
 from time import time
+import pandas as pd
 import os
 
 tic = time()
@@ -30,7 +28,8 @@ stood_dict = {'HKCategoryValueAppleStandHourStood': 1,
               'HKCategoryValueAppleStandHourIdle': 0,
               'HKCategoryValueSleepAnalysisAsleep': 1,
               'HKCategoryValueSleepAnalysisInBed': 0,
-              'HKCategoryValueEnvironmentalAudioExposureEventMomentaryLimit': 1}
+              'HKCategoryValueEnvironmentalAudioExposureEventMomentaryLimit': 1,
+              'HKCategoryValueNotApplicable': 1}
 
 df['Value'] = df['Value'].replace(stood_dict)
 df['Value'] = pd.to_numeric(df['Value'])
