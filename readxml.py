@@ -10,7 +10,10 @@ NUMERIC_KEYS = ['value']
 OTHER_KEYS = ['type', 'sourceName', 'unit']
 ALL_KEYS = DATETIME_KEYS + NUMERIC_KEYS + OTHER_KEYS
 
-xtree = et.parse(r'/Users/gustavoamarante/Downloads/apple_health_export/export.xml')
+# file_path = r'/Users/gustavoamarante/Downloads/apple_health_export/export.xml'  # iMac
+file_path = r'/Users/gusamarante/Downloads/apple_health_export/export.xml'  # Macbook
+
+xtree = et.parse(file_path)
 xroot = xtree.getroot()
 
 df = pd.DataFrame([{key: r.get(key) for key in ALL_KEYS} for r in xroot if r.tag == 'Record'])
