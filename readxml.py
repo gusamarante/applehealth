@@ -10,8 +10,8 @@ NUMERIC_KEYS = ['value']
 OTHER_KEYS = ['type', 'sourceName', 'unit']
 ALL_KEYS = DATETIME_KEYS + NUMERIC_KEYS + OTHER_KEYS
 
-# file_path = r'/Users/gustavoamarante/Downloads/apple_health_export/export.xml'  # iMac
-file_path = r'/Users/gusamarante/Downloads/apple_health_export/export.xml'  # Macbook
+file_path = r'/Users/gustavoamarante/Downloads/apple_health_export/export.xml'  # iMac
+# file_path = r'/Users/gusamarante/Downloads/apple_health_export/export.xml'  # Macbook
 
 xtree = et.parse(file_path)
 xroot = xtree.getroot()
