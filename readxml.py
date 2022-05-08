@@ -1,6 +1,7 @@
 import xml.etree.cElementTree as et
 from time import time
 import pandas as pd
+import getpass
 import os
 
 tic = time()
@@ -10,8 +11,8 @@ NUMERIC_KEYS = ['value']
 OTHER_KEYS = ['type', 'sourceName', 'unit']
 ALL_KEYS = DATETIME_KEYS + NUMERIC_KEYS + OTHER_KEYS
 
-# file_path = r'/Users/gustavoamarante/Downloads/apple_health_export/export.xml'  # iMac
-file_path = r'/Users/gusamarante/Downloads/apple_health_export/export.xml'  # Macbook
+username = getpass.getuser()
+file_path = f'/Users/{username}/Downloads/apple_health_export/export.xml'
 
 xtree = et.parse(file_path)
 xroot = xtree.getroot()
