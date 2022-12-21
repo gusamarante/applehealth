@@ -9,7 +9,8 @@ import os
 tic = time()
 
 # Read the file
-xml_string = open("/Users/gustavoamarante/Downloads/apple_health_export/export.xml").read()
+# xml_string = open("/Users/gustavoamarante/Downloads/apple_health_export/export.xml").read()
+xml_string = open(r"C:\Users\gamarante\Downloads\export.xml").read()  # BWGI
 
 print("Pre-processing...", end="")
 sys.stdout.flush()

@@ -8,8 +8,7 @@ register_matplotlib_converters()
 chart_size = (17, 8)
 show_charts = False
 
-df = pd.read_hdf('health_data.h5', 'health')
-
+# Important dates
 quarentine_date = '2020-03-20'
 exercise_date = '2020-04-06'
 quarentine_end = '2020-07-13'
@@ -19,6 +18,9 @@ sett_date = '2020-10-23'
 CE_start = '2020-12-13'
 CE_end = '2020-12-20'
 new_scale_date = '2022-01-26'
+
+# Read data
+df = pd.read_hdf('health_data.h5', 'health')
 
 with PdfPages('health_chartbook.pdf') as pdf:
     # ===== Weight =====
