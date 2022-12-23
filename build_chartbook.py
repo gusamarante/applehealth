@@ -28,7 +28,6 @@ title_dict = {'AppleExerciseTime': 'Exercise Time',
               'DistanceCycling': 'Cycling Distance',
               'DistanceSwimming': 'Swimming Distance',
               'DistanceWalkingRunning': 'Walking + Running Distance',
-              'FlightsClimbed': 'Flights Climbed',
               'NumberOfAlcoholicBeverages': 'Number of Alcoholic Drinks',
               'StepCount': 'Step Count',
               'WaistCircumference': 'Waist Circumference'}
@@ -40,7 +39,6 @@ resample_dict = {'AppleExerciseTime': 'sum',
                  'DistanceCycling': 'sum',
                  'DistanceSwimming': 'sum',
                  'DistanceWalkingRunning': 'sum',
-                 'FlightsClimbed': 'sum',
                  'NumberOfAlcoholicBeverages': 'sum',
                  'StepCount': 'sum',
                  'WaistCircumference': 'mean'}
@@ -52,7 +50,6 @@ interpolate_dict = {'AppleExerciseTime': 'zeros',
                     'DistanceCycling': 'zeros',
                     'DistanceSwimming': 'zeros',
                     'DistanceWalkingRunning': 'zeros',
-                    'FlightsClimbed': 'zeros',
                     'NumberOfAlcoholicBeverages': 'zeros',
                     'StepCount': 'zeros',
                     'WaistCircumference': 'linear'}
@@ -64,7 +61,6 @@ unit_dict = {'AppleExerciseTime': 'Minutes',
              'DistanceCycling': 'Kilometers',
              'DistanceSwimming': 'Meters',
              'DistanceWalkingRunning': 'Kilometers',
-             'FlightsClimbed': 'Flights',
              'NumberOfAlcoholicBeverages': '',
              'StepCount': '',
              'WaistCircumference': ''}
@@ -76,7 +72,6 @@ locator_dict = {'AppleExerciseTime': 10,
                 'DistanceCycling': 5,
                 'DistanceSwimming': 100,
                 'DistanceWalkingRunning': 5,
-                'FlightsClimbed': 10,
                 'HeartRateRecoveryOneMinute': 1,
                 'NumberOfAlcoholicBeverages': 1,
                 'StepCount': 2000,
@@ -158,13 +153,59 @@ with PdfPages('health_chartbook.pdf') as pdf:
 
         plt.close()
 
+    # Blood Preassure
+    df_bp = pd.DataFrame()
+    df_bp['Systolic'] = df['BloodPressureSystolic'].resample('D').mean().interpolate(limit_area='inside')
+    df_bp['Diastolic'] = df['BloodPressureDiastolic'].resample('D').mean().interpolate(limit_area='inside')
+
+    df_bp['Systolic 30DMA'] = df_bp['Systolic'].rolling(30).mean()
+    df_bp['Diastolic 30DMA'] = df_bp['Diastolic'].rolling(30).mean()
+
+    df_bp['Systolic std'] = df_bp['Systolic'].rolling(30).std()
+    df_bp['Diastolic std'] = df_bp['Diastolic'].rolling(30).std()
+
+    df_bp = df_bp.dropna(how='all')
+
+    fig, ax = plt.subplots(figsize=chart_size)
+    ax.plot(df_bp['Systolic'], linewidth=0, color='blue', alpha=0.3, marker='o', markeredgecolor='white')
+    ax.plot(df_bp['Diastolic'], linewidth=0, color='red', alpha=0.3, marker='o', markeredgecolor='white')
+
+    ax.plot(df_bp['Systolic 30DMA'], linewidth=3, color='blue')
+    ax.plot(df_bp['Diastolic 30DMA'], linewidth=3, color='red')
+
+    plt.fill_between(x=df_bp.index,
+                     y1=df_bp['Systolic 30DMA'] + 1.68 * df_bp['Systolic std'],
+                     y2=df_bp['Systolic 30DMA'] - 1.68 * df_bp['Systolic std'],
+                     alpha=0.3, color='blue', edgecolor=None)
+
+    plt.fill_between(x=df_bp.index,
+                     y1=df_bp['Diastolic 30DMA'] + 1.68 * df_bp['Diastolic std'],
+                     y2=df_bp['Diastolic 30DMA'] - 1.68 * df_bp['Diastolic std'],
+                     alpha=0.3, color='red', edgecolor=None)
+
+    ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
+
+    ax.set(title='Blood Pressure')
+
+    loc = MultipleLocator(base=10)
+    ax.yaxis.set_major_locator(loc)
+
+    x_max, x_min = df_bp.dropna(how='all').index.max(), df_bp.index.dropna(how='all').min()
+    plt.xlim(x_min, x_max + pd.offsets.Day(10))
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
+
+    plt.tight_layout()
+
+    pdf.savefig(fig)
+
+    if show_charts:
+        plt.show()
+
+    plt.close()
+
 # ====== Special Charts =====
-
-# 'BloodPressureDiastolic': '',
-# 'BloodPressureSystolic': '',
-
 # 'HeartRate': '',
 # 'RestingHeartRate': '',
 # 'WalkingHeartRateAverage': '',
-
-# 'HeartRateRecoveryOneMinute': 'One minute Heart Rate Recovery',
