@@ -83,7 +83,7 @@ df['value'] = df['value'].astype(float)
 df['endDate'] = pd.to_datetime(df['endDate'])
 df = pd.pivot_table(df, index='endDate', columns='type', values='value', aggfunc='mean')
 
-with PdfPages('health_chartbook.pdf') as pdf:
+with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
 
     for var in tqdm(df.columns, 'Building Charts'):
 
