@@ -1,113 +1,73 @@
-import xml.etree.ElementTree as ET
-from tqdm import tqdm
-from time import time
-import pandas as pd
-import sys
+import xml.etree.ElementTree as etree
+from dateutil.parser import parse
 import re
 import os
-
+import pandas as pd
+from tqdm import tqdm
+from time import time
 tic = time()
 
-# Read the file
-xml_string = open("/Users/gustavoamarante/Downloads/apple_health_export/export.xml").read()
-# xml_string = open(r"C:\Users\gamarante\Downloads\export.xml").read()  # BWGI
 
-print("Pre-processing...", end="")
-sys.stdout.flush()
-start_strip = re.search('<!DOCTYPE', xml_string).span()[0]
-end_strip = re.search(']>', xml_string).span()[1]
-xml_string = xml_string[:start_strip] + xml_string[end_strip:]
-xml_string = xml_string.replace("\x0b", "")
-print("done!")
+export_path = '/Users/gustavoamarante/Downloads/apple_health_export/export.xml'
+var2skip = ['DietaryWater', 'HeartRate', 'LeanBodyMass', 'BasalEnergyBurned',
+            'ActiveEnergyBurned', 'RespiratoryRate', 'DietaryFatTotal',
+            'DietaryFatPolyunsaturated', 'DietaryFatMonounsaturated', 'DietaryFatSaturated',
+            'DietaryCholesterol', 'DietarySodium', 'DietaryCarbohydrates',
+            'DietaryFiber', 'DietarySugar', 'DietaryEnergyConsumed',
+            'DietaryProtein', 'DietaryVitaminB6', 'DietaryVitaminE',
+            'DietaryCalcium', 'DietaryIron', 'DietaryThiamin', 'DietaryNiacin',
+            'DietaryFolate', 'DietaryPhosphorus', 'DietaryMagnesium', 'DietaryZinc',
+            'DietarySelenium', 'DietaryCopper', 'DietaryPotassium', 'SwimmingStrokeCount',
+            'VO2Max', 'EnvironmentalAudioExposure', 'HeadphoneAudioExposure',
+            'WalkingDoubleSupportPercentage', 'SixMinuteWalkTestDistance',
+            'WalkingStepLength', 'WalkingAsymmetryPercentage', 'HKDataTypeSleepDurationGoal',
+            'AppleWalkingSteadiness', 'HeartRateRecoveryOneMinute', 'SleepAnalysis',
+            'MindfulSession', 'HighHeartRateEvent', 'AudioExposureEvent', 'HandwashingEvent',
+            'HeartRateVariabilitySDNN']
 
-# Process the XML
-sys.stdout.flush()
+formatted_records = []
+total_count = 0
+PREFIX_RE = re.compile('HK.*Identifier(.+)$')
 
-etree = ET.ElementTree(ET.fromstring(xml_string))
-attribute_list = []
 
-for child in tqdm(etree.getroot(), 'Processing XML'):
-    child_attrib = child.attrib
-    for metadata_entry in list(child):
-        metadata_values = list(metadata_entry.attrib.values())
-        if len(metadata_values) == 2:
-            metadata_dict = {metadata_values[0]: metadata_values[1]}
-            child_attrib.update(metadata_dict)
+def try_to_float(v):
+    """convert v to float or 0"""
+    try:
+        return float(v)
+    except ValueError:
+        try:
+            return int(v)
+        except:
+            return 0
 
-    attribute_list.append(child_attrib)
 
-health_df = pd.DataFrame(attribute_list)
+def format_record(record):
+    """format a export health xml record for influx"""
+    m = re.match(PREFIX_RE, record.get("type"))
+    measurement = m.group(1) if m else record.get("type")
+    value = try_to_float(record.get("value", 1))
+    unit = record.get("unit", "unit")
+    date = pd.to_datetime(record.get("startDate")).tz_localize(None)
 
-# Every health data type and some columns have a long identifer
-# Removing these for readability
-health_df.type = health_df.type.str.replace('HKQuantityTypeIdentifier', "")
-health_df.type = health_df.type.str.replace('HKCategoryTypeIdentifier', "")
-health_df.columns = health_df.columns.str.replace("HKCharacteristicTypeIdentifier", "")
+    series = pd.Series(name=measurement, index=[date], data=value)
 
-# Reorder some of the columns for easier visual data review
-original_cols = list(health_df)
-shifted_cols = ['type',
-                'sourceName',
-                'value',
-                'unit',
-                'startDate',
-                'endDate',
-                'creationDate']
+    return series
 
-# Add loop specific column ordering if metadata entries exist
-if 'com.loopkit.InsulinKit.MetadataKeyProgrammedTempBasalRate' in original_cols:
-    shifted_cols.append(
-        'com.loopkit.InsulinKit.MetadataKeyProgrammedTempBasalRate')
 
-if 'com.loopkit.InsulinKit.MetadataKeyScheduledBasalRate' in original_cols:
-    shifted_cols.append(
-        'com.loopkit.InsulinKit.MetadataKeyScheduledBasalRate')
+df = pd.DataFrame()
+for _, elem in tqdm(etree.iterparse(export_path)):
+    if elem.tag == "Record":
+        f = format_record(elem)
+        if not (f.name in var2skip):
+            # print(f.name)
+            df.loc[f.index[0], f.name] = f.values[0]
+        del elem
 
-if 'com.loudnate.CarbKit.HKMetadataKey.AbsorptionTimeMinutes' in original_cols:
-    shifted_cols.append(
-        'com.loudnate.CarbKit.HKMetadataKey.AbsorptionTimeMinutes')
 
-remaining_cols = list(set(original_cols) - set(shifted_cols))
-reordered_cols = shifted_cols + remaining_cols
-health_df = health_df.reindex(labels=reordered_cols, axis='columns')
-
-# Sort by newest data first
-health_df.sort_values(by='startDate', ascending=False, inplace=True)
-
-# Variables to Keep
-var2keep = ['HeartRate',
-            'StepCount',
-            'DistanceWalkingRunning',
-            'WalkingStepLength',
-            'WalkingDoubleSupportPercentage',
-            'WalkingSpeed',
-            'AppleExerciseTime',
-            'WalkingAsymmetryPercentage',
-            'FlightsClimbed',
-            'NumberOfAlcoholicBeverages',
-            'DistanceCycling',
-            'WalkingHeartRateAverage',
-            'RestingHeartRate',
-            'WaistCircumference',
-            'BloodPressureDiastolic',
-            'BloodPressureSystolic',
-            'BodyMass',
-            'LeanBodyMass',
-            'BodyFatPercentage',
-            'BodyMassIndex',
-            'HeartRateRecoveryOneMinute',
-            'DistanceSwimming',
-            'SwimmingStrokeCount']
-
-health_df = health_df[health_df['type'].isin(var2keep)]
-health_df = health_df[['type', 'value', 'unit', 'endDate']]
-
-toc = time()
-
-# Save data
 cwd = os.getcwd()
 store = pd.HDFStore(cwd + r'/health_data.h5')
-store['health'] = health_df
+store['health'] = df
 store.close()
 
+toc = time()
 print(round((toc - tic)/60, 1), 'minutes')
