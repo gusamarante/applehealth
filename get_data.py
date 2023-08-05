@@ -22,22 +22,18 @@ records = pd.DataFrame(data['Record'])
 
 fields2keep = [
     'HKQuantityTypeIdentifierBodyMass',
-    # 'HKQuantityTypeIdentifierHeartRate',
     'HKQuantityTypeIdentifierBloodPressureSystolic',
     'HKQuantityTypeIdentifierBloodPressureDiastolic',
     'HKQuantityTypeIdentifierBodyFatPercentage',
-    # 'HKQuantityTypeIdentifierLeanBodyMass',
     'HKQuantityTypeIdentifierStepCount',
     'HKQuantityTypeIdentifierDistanceWalkingRunning',
-    # 'HKQuantityTypeIdentifierActiveEnergyBurned',
     'HKQuantityTypeIdentifierAppleExerciseTime',
+    # 'HKQuantityTypeIdentifierLeanBodyMass',
     # 'HKQuantityTypeIdentifierDistanceCycling',
-    # 'HKQuantityTypeIdentifierDistanceSwimming',
     # 'HKQuantityTypeIdentifierWaistCircumference',
+    # 'HKQuantityTypeIdentifierHeartRate',
     # 'HKQuantityTypeIdentifierRestingHeartRate',
-    # 'HKQuantityTypeIdentifierVO2Max',
     # 'HKQuantityTypeIdentifierWalkingHeartRateAverage',
-    # 'HKQuantityTypeIdentifierNumberOfAlcoholicBeverages',
 ]
 
 print(records.shape[0], 'before filter')
