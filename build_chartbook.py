@@ -1,5 +1,4 @@
 import pandas as pd
-from tqdm import tqdm
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
 import matplotlib.dates as mdates
@@ -45,6 +44,7 @@ replace = {
     'HKQuantityTypeIdentifierAppleExerciseTime': 'Exercise Time',
     'HKQuantityTypeIdentifierBloodPressureSystolic': 'Systolic',
     'HKQuantityTypeIdentifierBloodPressureDiastolic': 'Diastolic',
+    'HKQuantityTypeIdentifierStepCount': 'Steps',
 }
 df['Type'] = df['Type'].replace(replace)
 
@@ -69,7 +69,8 @@ with PdfPages('/Users/gamarante/Dropbox/health_chartbook.pdf') as pdf:
 
     # Chart
     fig, ax = plt.subplots(figsize=chart_shape)
-    ax.plot(s2plot[col_name], linewidth=0, color='tab:blue', alpha=0.3, marker='o', markeredgecolor='white', label=col_name)
+    ax.plot(s2plot[col_name], linewidth=0, color='tab:blue', alpha=0.3, marker='o', markeredgecolor='white',
+            label=col_name)
     ax.plot(s2plot['7d MA'], linewidth=2, color='tab:blue', label='7d MA')
     ax.plot(s2plot['30d MA'], linewidth=2, color='tab:orange', label='30d MA')
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
@@ -108,11 +109,11 @@ with PdfPages('/Users/gamarante/Dropbox/health_chartbook.pdf') as pdf:
     s2plot['7d MA'] = s2plot[col_name].rolling(7).mean()
     s2plot['30d MA'] = s2plot[col_name].rolling(30).mean()
     s2plot['365d MA'] = s2plot[col_name].rolling(365).mean()
-    # s2plot = s2plot[s2plot.index >= '2020-01-01']
 
     # Chart
     fig, ax = plt.subplots(figsize=chart_shape)
-    ax.plot(s2plot[col_name], linewidth=0, color='tab:blue', alpha=0.3, marker='o', markeredgecolor='white', label=col_name)
+    ax.plot(s2plot[col_name], linewidth=0, color='tab:blue', alpha=0.3, marker='o', markeredgecolor='white',
+            label=col_name)
     ax.plot(s2plot['7d MA'], linewidth=2, color='tab:blue', label='7d MA')
     ax.plot(s2plot['30d MA'], linewidth=2, color='tab:orange', label='30d MA')
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
@@ -155,7 +156,8 @@ with PdfPages('/Users/gamarante/Dropbox/health_chartbook.pdf') as pdf:
 
     # Chart
     fig, ax = plt.subplots(figsize=chart_shape)
-    ax.plot(s2plot[col_name], linewidth=0, color='tab:blue', alpha=0.3, marker='o', markeredgecolor='white', label=col_name)
+    ax.plot(s2plot[col_name], linewidth=0, color='tab:blue', alpha=0.3, marker='o', markeredgecolor='white',
+            label=col_name)
     ax.plot(s2plot['7d MA'], linewidth=2, color='tab:blue', label='7d MA')
     ax.plot(s2plot['30d MA'], linewidth=2, color='tab:orange', label='30d MA')
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
@@ -184,6 +186,50 @@ with PdfPages('/Users/gamarante/Dropbox/health_chartbook.pdf') as pdf:
 
     plt.close()
 
+    # ===== STEPS =====
+    col_name = 'Steps'
+    s2plot = df[col_name].resample('D').sum()
+    s2plot = s2plot.fillna(0).to_frame(col_name)
+    s2plot = s2plot.dropna()
+    s2plot = s2plot[s2plot.index >= '2019-11-01']
+    s2plot['7d MA'] = s2plot[col_name].rolling(7).mean()
+    s2plot['30d MA'] = s2plot[col_name].rolling(30).mean()
+    s2plot['365d MA'] = s2plot[col_name].rolling(365).mean()
+
+    # Chart
+    fig, ax = plt.subplots(figsize=chart_shape)
+    ax.bar(s2plot[col_name].index, s2plot[col_name].values, alpha=0.4, width=1, color='tab:blue', label=col_name)
+    ax.plot(s2plot['7d MA'], linewidth=2, color='tab:blue', label='7d MA')
+    ax.plot(s2plot['30d MA'], linewidth=2, color='tab:orange', label='30d MA')
+    ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
+
+    ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
+    ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
+
+    ax.set(title=col_name, ylabel='Steps')
+
+    x_max, x_min = s2plot.dropna(how='all').index.max(), s2plot.index.dropna(how='all').min()
+    ax.set_xlim(x_min, x_max)
+    ax.set_ylim(0, None)
+
+    locators = mdates.YearLocator()
+    ax.xaxis.set_major_locator(locators)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+
+    loc = MultipleLocator(base=5000)
+    ax.yaxis.set_major_locator(loc)
+
+    ax.yaxis.set_label_position("right")
+    ax.yaxis.tick_right()
+    ax.legend(loc='best', frameon=True)
+
+    plt.tight_layout()
+    pdf.savefig(fig)
+    if show_charts:
+        plt.show()
+
+    plt.close()
+
     # ===== WALK + RUN =====
     col_name = 'Walk+Run Distance'
     s2plot = df[col_name].resample('D').sum()
@@ -196,7 +242,8 @@ with PdfPages('/Users/gamarante/Dropbox/health_chartbook.pdf') as pdf:
 
     # Chart
     fig, ax = plt.subplots(figsize=chart_shape)
-    ax.plot(s2plot[col_name], linewidth=0, color='tab:blue', alpha=0.3, marker='o', markeredgecolor='white', label=col_name)
+    ax.plot(s2plot[col_name], linewidth=0, color='tab:blue', alpha=0.3, marker='o', markeredgecolor='white',
+            label=col_name)
     ax.plot(s2plot['7d MA'], linewidth=2, color='tab:blue', label='7d MA')
     ax.plot(s2plot['30d MA'], linewidth=2, color='tab:orange', label='30d MA')
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
@@ -239,11 +286,13 @@ with PdfPages('/Users/gamarante/Dropbox/health_chartbook.pdf') as pdf:
     df_bp = df_bp.dropna(how='all')
 
     fig, ax = plt.subplots(figsize=chart_shape)
-    ax.plot(df_bp['Systolic'], linewidth=0, color='tab:blue', alpha=0.3, marker='o', markeredgecolor='white')
-    ax.plot(df_bp['Diastolic'], linewidth=0, color='tab:orange', alpha=0.3, marker='o', markeredgecolor='white')
+    ax.plot(df_bp['Systolic'], linewidth=0, color='tab:blue', alpha=0.3, marker='o', markeredgecolor='white',
+            label='Systolic')
+    ax.plot(df_bp['Diastolic'], linewidth=0, color='tab:orange', alpha=0.3, marker='o', markeredgecolor='white',
+            label='Diastolic')
 
-    ax.plot(df_bp['Systolic 30d MA'], linewidth=3, color='tab:blue')
-    ax.plot(df_bp['Diastolic 30d MA'], linewidth=3, color='tab:orange')
+    ax.plot(df_bp['Systolic 30d MA'], linewidth=3, color='tab:blue', label='Systolic 30d MA')
+    ax.plot(df_bp['Diastolic 30d MA'], linewidth=3, color='tab:orange', label='Diastolic 30d MA')
 
     plt.fill_between(x=df_bp.index,
                      y1=df_bp['Systolic 30d MA'] + 1.68 * df_bp['Systolic std'],
@@ -256,6 +305,7 @@ with PdfPages('/Users/gamarante/Dropbox/health_chartbook.pdf') as pdf:
                      alpha=0.3, color='tab:orange', edgecolor=None)
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
+    ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
 
     ax.set(title='Blood Pressure')
 
@@ -268,6 +318,12 @@ with PdfPages('/Users/gamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.yaxis.set_label_position("right")
     ax.yaxis.tick_right()
 
+    locators = mdates.YearLocator()
+    ax.xaxis.set_major_locator(locators)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+
+    ax.legend(loc='best', frameon=True)
+
     plt.tight_layout()
 
     pdf.savefig(fig)
@@ -276,4 +332,3 @@ with PdfPages('/Users/gamarante/Dropbox/health_chartbook.pdf') as pdf:
         plt.show()
 
     plt.close()
-

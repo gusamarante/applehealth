@@ -5,7 +5,7 @@ import os
 
 tic = time()
 
-file_name = "C:/Users/gamarante/Dropbox/export.xml"  # BWGI
+file_name = "/Users/gamarante/Downloads/apple_health_export/export.xml"
 with open(file_name) as file:
     xml = xmltodict.parse(file.read())
     data = xml["HealthData"]
@@ -27,7 +27,7 @@ fields2keep = [
     'HKQuantityTypeIdentifierBloodPressureDiastolic',
     'HKQuantityTypeIdentifierBodyFatPercentage',
     # 'HKQuantityTypeIdentifierLeanBodyMass',
-    # 'HKQuantityTypeIdentifierStepCount',
+    'HKQuantityTypeIdentifierStepCount',
     'HKQuantityTypeIdentifierDistanceWalkingRunning',
     # 'HKQuantityTypeIdentifierActiveEnergyBurned',
     'HKQuantityTypeIdentifierAppleExerciseTime',
@@ -51,4 +51,4 @@ store = pd.HDFStore(cwd + r'/health_data.h5')
 store['health'] = records
 store.close()
 
-print(time() - tic)
+print((time() - tic)/60, 'seconds')
