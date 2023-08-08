@@ -6,11 +6,12 @@ import os
 tic = time()
 
 file_name = "/Users/gamarante/Downloads/apple_health_export/export.xml"
+print('Parsing XML...')
 with open(file_name) as file:
     xml = xmltodict.parse(file.read())
     data = xml["HealthData"]
 
-print('Data Keys', data.keys())
+print('Available Data Keys', data.keys())
 
 # ===== Records =====
 records = pd.DataFrame(data['Record'])
@@ -28,9 +29,9 @@ fields2keep = [
     'HKQuantityTypeIdentifierStepCount',
     'HKQuantityTypeIdentifierDistanceWalkingRunning',
     'HKQuantityTypeIdentifierAppleExerciseTime',
-    # 'HKQuantityTypeIdentifierLeanBodyMass',
-    # 'HKQuantityTypeIdentifierDistanceCycling',
-    # 'HKQuantityTypeIdentifierWaistCircumference',
+    'HKQuantityTypeIdentifierWaistCircumference',
+    'HKQuantityTypeIdentifierDistanceCycling',
+    'HKQuantityTypeIdentifierLeanBodyMass',
     # 'HKQuantityTypeIdentifierHeartRate',
     # 'HKQuantityTypeIdentifierRestingHeartRate',
     # 'HKQuantityTypeIdentifierWalkingHeartRateAverage',
@@ -47,4 +48,4 @@ store = pd.HDFStore(cwd + r'/health_data.h5')
 store['health'] = records
 store.close()
 
-print((time() - tic)/60, 'seconds')
+print(round((time() - tic)/60, 2), 'minutes')
