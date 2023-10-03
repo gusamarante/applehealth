@@ -5,7 +5,7 @@ import os
 
 tic = time()
 
-file_name = "/Users/gamarante/Downloads/apple_health_export/export.xml"
+file_name = "/Users/gustavoamarante/Downloads/apple_health_export/export.xml"
 print('Parsing XML...')
 with open(file_name) as file:
     xml = xmltodict.parse(file.read())
