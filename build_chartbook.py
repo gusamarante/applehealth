@@ -19,6 +19,7 @@ sett_date = '2020-10-23'
 CE_start = '2020-12-13'
 CE_end = '2020-12-20'
 new_scale_date = '2022-01-26'
+nosugardate = '2023-10-02'
 
 # Chart Parameters
 size = 7
