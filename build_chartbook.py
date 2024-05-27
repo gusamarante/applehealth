@@ -1,10 +1,10 @@
-import pandas as pd
-import matplotlib.pyplot as plt
+# from pandas.plotting import register_matplotlib_converters
+from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.ticker import MultipleLocator
 import matplotlib.dates as mdates
-from matplotlib.backends.backend_pdf import PdfPages
-from pandas.plotting import register_matplotlib_converters
-register_matplotlib_converters()
+import matplotlib.pyplot as plt
+import pandas as pd
+# register_matplotlib_converters()
 
 
 show_charts = True
@@ -15,11 +15,10 @@ exercise_date = '2020-04-06'
 quarentine_end = '2020-07-13'
 ozempic_date = '2020-08-04'
 ozempic_date2 = '2021-04-26'
-sett_date = '2020-10-23'
 CE_start = '2020-12-13'
 CE_end = '2020-12-20'
 new_scale_date = '2022-01-26'
-nosugardate = '2023-10-01'
+sett_date = pd.to_datetime('2024-06-01')
 
 # Chart Parameters
 size = 7
@@ -77,7 +76,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(s2plot['30d MA'], linewidth=2, color='tab:orange', label='30d MA')
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
 
-    ax.axvline(nosugardate, color='black', lw=1)
+    ax.axvline(sett_date, color='black', lw=1)
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
     ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
@@ -88,7 +87,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.yaxis.set_major_locator(loc)
 
     x_max, x_min = s2plot.dropna(how='all').index.max(), s2plot.index.dropna(how='all').min()
-    ax.set_xlim(x_min, x_max)
+    ax.set_xlim(x_min, None)
 
     locators = mdates.YearLocator()
     ax.xaxis.set_major_locator(locators)
@@ -113,7 +112,6 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     s2plot['7d MA'] = s2plot[col_name].rolling(7).mean()
     s2plot['30d MA'] = s2plot[col_name].rolling(30).mean()
     s2plot['365d MA'] = s2plot[col_name].rolling(365).mean()
-    # s2plot = s2plot[s2plot.index >= '2019-11-01']
 
     # Chart
     fig, ax = plt.subplots(figsize=chart_shape)
@@ -122,7 +120,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(s2plot['30d MA'], linewidth=2, color='tab:orange', label='30d MA')
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
 
-    ax.axvline(nosugardate, color='black', lw=1)
+    ax.axvline(sett_date, color='black', lw=1)
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
     ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
@@ -133,7 +131,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.yaxis.set_major_locator(loc)
 
     x_max, x_min = s2plot.dropna(how='all').index.max(), s2plot.index.dropna(how='all').min()
-    ax.set_xlim(x_min, x_max)
+    ax.set_xlim(x_min, None)
 
     locators = mdates.YearLocator()
     ax.xaxis.set_major_locator(locators)
@@ -166,7 +164,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(s2plot['30d MA'], linewidth=2, color='tab:orange', label='30d MA')
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
 
-    ax.axvline(nosugardate, color='black', lw=1)
+    ax.axvline(sett_date, color='black', lw=1)
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
     ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
@@ -177,7 +175,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.yaxis.set_major_locator(loc)
 
     x_max, x_min = s2plot.dropna(how='all').index.max(), s2plot.index.dropna(how='all').min()
-    ax.set_xlim(x_min, x_max)
+    ax.set_xlim(x_min, None)
 
     locators = mdates.YearLocator()
     ax.xaxis.set_major_locator(locators)
@@ -211,6 +209,8 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(s2plot['30d MA'], linewidth=2, color='tab:orange', label='30d MA')
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
 
+    ax.axvline(sett_date, color='black', lw=1)
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
     ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
 
@@ -220,7 +220,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.yaxis.set_major_locator(loc)
 
     x_max, x_min = s2plot.dropna(how='all').index.max(), s2plot.index.dropna(how='all').min()
-    ax.set_xlim(x_min, x_max)
+    ax.set_xlim(x_min, None)
 
     locators = mdates.YearLocator()
     ax.xaxis.set_major_locator(locators)
@@ -254,14 +254,16 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(s2plot['30d MA'], linewidth=2, color='tab:orange', label='30d MA')
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
 
+    ax.axvline(sett_date, color='black', lw=1)
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
     ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
 
     ax.set(title=col_name, ylabel='Minutes')
 
     x_max, x_min = s2plot.dropna(how='all').index.max(), s2plot.index.dropna(how='all').min()
-    ax.set_xlim(x_min, x_max)
-    ax.set_ylim(0, None)
+    ax.set_xlim(x_min, None)
+    ax.set_ylim(0, 150)
 
     locators = mdates.YearLocator()
     ax.xaxis.set_major_locator(locators)
@@ -301,7 +303,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.set(title=col_name, ylabel='Steps')
 
     x_max, x_min = s2plot.dropna(how='all').index.max(), s2plot.index.dropna(how='all').min()
-    ax.set_xlim(x_min, x_max)
+    ax.set_xlim(x_min, None)
     ax.set_ylim(0, None)
 
     locators = mdates.YearLocator()
@@ -345,7 +347,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.set(title=col_name, ylabel='Kilometers')
 
     x_max, x_min = s2plot.dropna(how='all').index.max(), s2plot.index.dropna(how='all').min()
-    ax.set_xlim(x_min, x_max)
+    ax.set_xlim(x_min, None)
     ax.set_ylim(0, None)
 
     locators = mdates.YearLocator()
@@ -380,13 +382,15 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(s2plot['30d MA'], linewidth=2, color='tab:orange', label='30d MA')
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
 
+    ax.axvline(sett_date, color='black', lw=1)
+
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
     ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
 
     ax.set(title=col_name, ylabel='Km')
 
     x_max, x_min = s2plot.dropna(how='all').index.max(), s2plot.index.dropna(how='all').min()
-    ax.set_xlim(x_min, x_max)
+    ax.set_xlim(x_min, None)
 
     locators = mdates.YearLocator()
     ax.xaxis.set_major_locator(locators)
@@ -423,6 +427,8 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(df_bp['Systolic 30d MA'], linewidth=3, color='tab:blue', label='Systolic 30d MA')
     ax.plot(df_bp['Diastolic 30d MA'], linewidth=3, color='tab:orange', label='Diastolic 30d MA')
 
+    ax.axvline(sett_date, color='black', lw=1)
+
     plt.fill_between(x=df_bp.index,
                      y1=df_bp['Systolic 30d MA'] + 1.68 * df_bp['Systolic std'],
                      y2=df_bp['Systolic 30d MA'] - 1.68 * df_bp['Systolic std'],
@@ -442,7 +448,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.yaxis.set_major_locator(loc)
 
     x_max, x_min = df_bp.dropna(how='all').index.max(), df_bp.index.dropna(how='all').min()
-    plt.xlim(x_min, x_max)
+    plt.xlim(x_min, None)
 
     ax.yaxis.set_label_position("right")
     ax.yaxis.tick_right()
