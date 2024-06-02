@@ -1,13 +1,11 @@
-# from pandas.plotting import register_matplotlib_converters
 from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib.ticker import MultipleLocator
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import pandas as pd
-# register_matplotlib_converters()
 
 
-show_charts = True
+show_charts = False
 
 # Important dates
 quarentine_date = '2020-03-20'
