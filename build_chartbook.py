@@ -17,6 +17,7 @@ CE_start = '2020-12-13'
 CE_end = '2020-12-20'
 new_scale_date = '2022-01-26'
 sett_date = pd.to_datetime('2024-06-01')
+ozempic_date3 = pd.to_datetime('2024-06-01')
 
 # Chart Parameters
 size = 7
@@ -75,6 +76,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
 
     ax.axvline(sett_date, color='black', lw=1)
+    ax.axvline(ozempic_date3, color='black', lw=1)
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
     ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
@@ -119,6 +121,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
 
     ax.axvline(sett_date, color='black', lw=1)
+    ax.axvline(ozempic_date3, color='black', lw=1)
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
     ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
@@ -163,6 +166,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
 
     ax.axvline(sett_date, color='black', lw=1)
+    ax.axvline(ozempic_date3, color='black', lw=1)
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
     ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
@@ -208,6 +212,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
 
     ax.axvline(sett_date, color='black', lw=1)
+    ax.axvline(ozempic_date3, color='black', lw=1)
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
     ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
@@ -253,6 +258,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
 
     ax.axvline(sett_date, color='black', lw=1)
+    ax.axvline(ozempic_date3, color='black', lw=1)
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
     ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
@@ -381,6 +387,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(s2plot['365d MA'], linewidth=2, color='tab:green', label='365d MA')
 
     ax.axvline(sett_date, color='black', lw=1)
+    ax.axvline(ozempic_date3, color='black', lw=1)
 
     ax.yaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
     ax.xaxis.grid(color='grey', linestyle='-', linewidth=0.5, alpha=0.5)
@@ -426,6 +433,7 @@ with PdfPages('/Users/gustavoamarante/Dropbox/health_chartbook.pdf') as pdf:
     ax.plot(df_bp['Diastolic 30d MA'], linewidth=3, color='tab:orange', label='Diastolic 30d MA')
 
     ax.axvline(sett_date, color='black', lw=1)
+    ax.axvline(ozempic_date3, color='black', lw=1)
 
     plt.fill_between(x=df_bp.index,
                      y1=df_bp['Systolic 30d MA'] + 1.68 * df_bp['Systolic std'],
