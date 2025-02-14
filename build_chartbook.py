@@ -9,15 +9,12 @@ show_charts = False
 
 # Important dates
 quarentine_date = '2020-03-20'
-exercise_date = '2020-04-06'
 quarentine_end = '2020-07-13'
 ozempic_date = '2020-08-04'
-ozempic_date2 = '2021-04-26'
 CE_start = '2020-12-13'
 CE_end = '2020-12-20'
 new_scale_date = '2022-01-26'
 sett_date = pd.to_datetime('2024-06-01')
-ozempic_date3 = pd.to_datetime('2024-12-16')
 
 # Chart Parameters
 size = 7
